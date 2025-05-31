@@ -51,14 +51,30 @@ public static class Utils
     {
         if (source == null) return null;
         Texture2D tex2D = new Texture2D(targetWidth, targetHeight, TextureFormat.ARGB32, false);
-        RenderTexture rt = RenderTexture.GetTemporary(targetWidth, targetHeight, 0, RenderTextureFormat.ARGB32);
-        RenderTexture.active = rt;
-        Graphics.Blit(source, rt);
-        tex2D.ReadPixels(new Rect(0, 0, targetWidth, targetHeight), 0, 0);
-        tex2D.Apply();
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(rt);
-        return tex2D;
+        RenderTexture rt = null;
+
+        try
+        {
+            rt = RenderTexture.GetTemporary(targetWidth, targetHeight, 0, RenderTextureFormat.ARGB32);
+            RenderTexture.active = rt;
+            Graphics.Blit(source, rt);
+            tex2D.ReadPixels(new Rect(0, 0, targetWidth, targetHeight), 0, 0);
+            tex2D.Apply();
+            return tex2D;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error resizing texture: {e.Message}");
+            return null;
+        }
+        finally
+        {
+            RenderTexture.active = null;
+            if (rt != null)
+            {
+                RenderTexture.ReleaseTemporary(rt);
+            }
+        }
     }
 
     public static void MakeTexture2DClear(Texture2D tex2D, int width, int height)
@@ -113,6 +129,46 @@ public static class Utils
         catch (System.Exception e)
         {
             Debug.LogError(localization.GetLocalizedText(failedMsgKeyName, e.Message, e.StackTrace));
+        }
+    }
+
+    public static void SaveAndImportIconTexture(string filePath, byte[] bytes, Localization localization, bool pingAsset)
+    {
+        try
+        {
+            File.WriteAllBytes(filePath, bytes);
+            AssetDatabase.ImportAsset(filePath);
+
+            TextureImporter importer = AssetImporter.GetAtPath(filePath) as TextureImporter;
+            if (importer != null)
+            {
+                importer.alphaIsTransparency = true;
+                importer.textureType = TextureImporterType.Sprite;
+                importer.SaveAndReimport();
+            }
+            else
+            {
+                Debug.LogWarning(localization.GetLocalizedText("TextureImporterWarning", filePath));
+            }
+            Debug.Log(localization.GetLocalizedText("GenerationComplete", filePath));
+
+            if (pingAsset)
+            {
+                Object obj = AssetDatabase.LoadAssetAtPath<Texture2D>(filePath);
+                if (obj != null) EditorGUIUtility.PingObject(obj);
+            }
+        }
+        catch (System.IO.IOException ex)
+        {
+            Debug.LogError(localization.GetLocalizedText("ErrorSavingTextureFile", filePath, ex.Message));
+        }
+        catch (System.UnauthorizedAccessException ex)
+        {
+            Debug.LogError(localization.GetLocalizedText("PermissionErrorSavingTextureFile", filePath, ex.Message));
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(localization.GetLocalizedText("GenerationFailedError", e.Message, e.StackTrace));
         }
     }
 }

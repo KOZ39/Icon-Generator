@@ -8,7 +8,6 @@ public static class Data
     public const int DEFAULT_ZOOM_LEVEL = 100;
     public const float ORTHO_SIZE_MULTIPLIER_AT_DEFAULT_ZOOM = 1.1f;
     public const string LANGUAGE_PREF_KEY = "IconGenLanguage";
-    public const string LOCALIZATION_BASE_PATH = "Assets/KOZ39/IconGenerator/Editor/Localization/";
     public const string OUTPUT_PATH_PREF_KEY = "IconGenOutputPath";
     public const string TEMP_RESOLUTION_PREF_KEY = "IconGenTempResolution";
     public const string ZOOM_LEVEL_PREF_KEY = "IconGenZoomLevel";

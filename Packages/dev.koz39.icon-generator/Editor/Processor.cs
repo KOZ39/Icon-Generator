@@ -37,6 +37,7 @@ public static class Processor
     public static List<GameObject> FindObjectsToProcess(GameObject sourceObject, bool includeInactive)
     {
         List<GameObject> objectsToProcess = new List<GameObject>();
+        HashSet<GameObject> processedObjects = new HashSet<GameObject>();
         Renderer[] renderersInHierarchy = sourceObject.GetComponentsInChildren<Renderer>(includeInactive);
 
         if (renderersInHierarchy != null)
@@ -45,7 +46,7 @@ public static class Processor
             {
                 if (r != null && r.gameObject != null && !r.gameObject.CompareTag("EditorOnly") && !(r is ParticleSystemRenderer))
                 {
-                    if (!objectsToProcess.Contains(r.gameObject))
+                    if (processedObjects.Add(r.gameObject))
                     {
                         objectsToProcess.Add(r.gameObject);
                     }
@@ -80,16 +81,9 @@ public static class Processor
                 byte[] bytes = combinedIcon.EncodeToPNG();
                 string fileNameBase = Utils.SanitizeFileName(sourceObject.name);
                 string directionInfo = useCustomAngle ? $"CustomAngle({customAngle.x:0},{customAngle.y:0},{customAngle.z:0})" : direction.ToString().ToLower();
-
                 string filePath = Path.Combine(outputDirectory, $"{fileNameBase}_icon_{directionInfo}_{targetSize}x{targetSize}.png");
 
-                Utils.SaveAndImportTexture(filePath, bytes, localization, "GenerationComplete", "TextureImporterWarning", "GenerationFailedError");
-
-                if (goToOutputDirectory)
-                {
-                    Object obj = AssetDatabase.LoadAssetAtPath<Texture2D>(filePath);
-                    if (obj != null) EditorGUIUtility.PingObject(obj);
-                }
+                Utils.SaveAndImportIconTexture(filePath, bytes, localization, goToOutputDirectory);
             }
             else
             {
@@ -121,8 +115,7 @@ public static class Processor
             }
 
             string progressTitle = localization.GetLocalizedText("IconGenerationProgress");
-            string progressMessage = $"{localization.GetLocalizedText("ProcessingIndividual")} {currentObject.name}... ({i + 1}/{objectsToProcess.Count})";
-            EditorUtility.DisplayProgressBar(progressTitle, progressMessage, (float)i / objectsToProcess.Count);
+            EditorUtility.DisplayProgressBar(progressTitle, $"{localization.GetLocalizedText("ProcessingIndividual")} {currentObject.name}... ({i + 1}/{objectsToProcess.Count})", (float)i / objectsToProcess.Count);
 
             Texture2D generatedIcon = null;
             try
@@ -134,16 +127,9 @@ public static class Processor
                     byte[] bytes = generatedIcon.EncodeToPNG();
                     string fileNameBase = Utils.SanitizeFileName(currentObject.name);
                     string directionInfo = useCustomAngle ? $"CustomAngle({customAngle.x:0},{customAngle.y:0},{customAngle.z:0})" : direction.ToString().ToLower();
-
                     string filePath = Path.Combine(outputDirectory, $"{fileNameBase}_icon_{directionInfo}_{targetSize}x{targetSize}.png");
 
-                    Utils.SaveAndImportTexture(filePath, bytes, localization, "GenerationComplete", "TextureImporterWarning", "GenerationFailedError");
-
-                    if (goToOutputDirectory && (!generatedCombined || i == objectsToProcess.Count - 1))
-                    {
-                        Object obj = AssetDatabase.LoadAssetAtPath<Texture2D>(filePath);
-                        if (obj != null) EditorGUIUtility.PingObject(obj);
-                    }
+                    Utils.SaveAndImportIconTexture(filePath, bytes, localization, goToOutputDirectory && (!generatedCombined || i == objectsToProcess.Count - 1));
                 }
                 else
                 {
