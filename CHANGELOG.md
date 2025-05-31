@@ -1,4 +1,9 @@
-﻿## v1.3.1
+﻿## v1.4.0
+- キャプチャ解像度とアイコンサイズをプリセットに置き換えました
+- 캡처 해상도 및 아이콘 크기를 프리셋으로 대체
+- Replaced capture resolution and icon size with presets
+
+## v1.3.1
 - GUIDに基づいてローカライズファイルを取得するように修正しました。
 - 현지화 파일을 GUID 기준으로 가져오도록 수정
 - Modified to fetch the localization files based on GUID.
