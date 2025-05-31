@@ -17,9 +17,9 @@ public class IconGenerator : EditorWindow
     private Image iconThumbnailPreview;
     private ObjectField objectField;
     private TextField outputPathField;
-    private IntegerField tempCaptureResolutionField;
+    private PopupField<int> tempCaptureResolutionField;
     private IntegerField zoomLevelField;
-    private IntegerField iconSizeField;
+    private PopupField<int> iconSizeField;
     private EnumField captureDirectionField;
     private Toggle useCustomAngleToggle;
     private Vector3Field customCameraAngleField;
@@ -117,7 +117,9 @@ public class IconGenerator : EditorWindow
         outputPathField.RegisterValueChangedCallback(evt => EditorPrefs.SetString(Data.OUTPUT_PATH_PREF_KEY, evt.newValue));
         root.Add(outputPathField);
 
-        tempCaptureResolutionField = new IntegerField(localization.GetLocalizedText("TempCaptureResolution")) { value = EditorPrefs.GetInt(Data.TEMP_RESOLUTION_PREF_KEY, Data.DEFAULT_TEMP_CAPTURE_RESOLUTION) };
+        tempCaptureResolutionField = new PopupField<int>(localization.GetLocalizedText("TempCaptureResolution"));
+        tempCaptureResolutionField.choices = Data.ResolutionOptions;
+        tempCaptureResolutionField.value = EditorPrefs.GetInt(Data.TEMP_RESOLUTION_PREF_KEY, Data.DEFAULT_TEMP_CAPTURE_RESOLUTION);
         tempCaptureResolutionField.RegisterValueChangedCallback(evt => {
             EditorPrefs.SetInt(Data.TEMP_RESOLUTION_PREF_KEY, evt.newValue);
             UpdateIconThumbnailPreview();
@@ -132,7 +134,9 @@ public class IconGenerator : EditorWindow
         });
         root.Add(zoomLevelField);
 
-        iconSizeField = new IntegerField(localization.GetLocalizedText("OutputIconSize")) { value = EditorPrefs.GetInt(Data.ICON_SIZE_PREF_KEY, 256) };
+        iconSizeField = new PopupField<int>(localization.GetLocalizedText("OutputIconSize"));
+        iconSizeField.choices = Data.SizeOptions;
+        iconSizeField.value = EditorPrefs.GetInt(Data.ICON_SIZE_PREF_KEY, 256);
         iconSizeField.RegisterValueChangedCallback(evt => {
             EditorPrefs.SetInt(Data.ICON_SIZE_PREF_KEY, evt.newValue);
             UpdateIconThumbnailPreview();

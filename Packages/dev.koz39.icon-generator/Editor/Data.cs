@@ -23,6 +23,16 @@ public static class Data
     public const string LOCALIZATION_JA_JSON_GUID = "993dabeee68601f4eb8fab9386ec6a2e";
 
 
+    public static readonly List<int> ResolutionOptions = new List<int>
+    {
+        32, 64, 128, 256, 512, 1024, 2048, 4096, 8192
+    };
+
+    public static readonly List<int> SizeOptions = new List<int>
+    {
+        32, 64, 128, 256, 512
+    };
+
     public enum CaptureDirection
     {
         Front,

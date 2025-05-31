@@ -35,5 +35,6 @@
   "IconThumbnailPreview": "アイコンプレビュー",
   "ZoomLevel": "ズーム (%)",
   "NoActiveProcessableObjectsCombined": "結合アイコンの生成に必要なアクティブオブジェクトが見つかりませんでした。",
-  "CombinedIcon": "結合アイコン"
+  "CombinedIcon": "結合アイコン",
+  "IconThumbnail": "アイコンサムネイル"
 }

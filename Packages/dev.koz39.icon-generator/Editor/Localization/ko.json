@@ -35,5 +35,6 @@
   "IconThumbnailPreview": "아이콘 미리보기",
   "ZoomLevel": "확대 (%)",
   "NoActiveProcessableObjectsCombined": "결합 아이콘 생성을 위한 활성 오브젝트가 없습니다.",
-  "CombinedIcon": "결합된 아이콘"
+  "CombinedIcon": "결합된 아이콘",
+  "IconThumbnail": "아이콘 썸네일"
 }
