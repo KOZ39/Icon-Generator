@@ -1,9 +1,9 @@
 {
   "name": "dev.koz39.icon-generator",
   "displayName": "KOZ39's Icon Generator",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "unity": "2022.3",
-  "description": "A tool for generating icons with ease.",
+  "description": "A tool for easily generating icons.",
   "documentationUrl": "https://github.com/KOZ39/Icon-Generator",
   "changelogUrl": "https://github.com/KOZ39/Icon-Generator/CHANGELOG.md",
   "licensesUrl": "https://github.com/KOZ39/Icon-Generator/LICENSE",

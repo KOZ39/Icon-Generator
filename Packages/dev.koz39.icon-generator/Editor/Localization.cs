@@ -27,7 +27,7 @@ public class Localization
             {
                 if (lang != Data.UILanguage.English)
                 {
-                    Debug.LogWarning($"Localization file not found or failed to load for language: {lang} (Code: {pair.Value.Code}). Expected path: {Path.Combine(Data.LOCALIZATION_BASE_PATH, $"{pair.Value.Code}.json")}");
+                    Debug.LogWarning($"Localization file not found or failed to load for language: {lang} (Code: {pair.Value.Code}, GUID: {pair.Value.Guid}).");
                 }
             }
         }
@@ -40,7 +40,7 @@ public class Localization
             }
             else
             {
-                Debug.LogError($"Critical Error: English localization data (en.json) not loaded from {Data.LOCALIZATION_BASE_PATH}. UI will use raw keys. Check file existence and format.");
+                Debug.LogError($"Critical Error: English localization data (en.json, GUID: {Data.LOCALIZATION_EN_JSON_GUID}) not loaded. UI will use raw keys. Check file existence and format.");
             }
         }
     }
@@ -52,35 +52,40 @@ public class Localization
             Debug.LogError($"No language info defined for UILanguage: {language}");
             return null;
         }
-        string filePath = Path.Combine(Data.LOCALIZATION_BASE_PATH, $"{langInfo.Code}.json");
-        if (!File.Exists(filePath))
+
+        string assetPath = AssetDatabase.GUIDToAssetPath(langInfo.Guid);
+        if (string.IsNullOrEmpty(assetPath))
         {
+            Debug.LogWarning($"Asset path for GUID '{langInfo.Guid}' (Language: {language}) not found. Check if the asset exists.");
             return null;
         }
+
+        TextAsset jsonTextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(assetPath);
+        if (jsonTextAsset == null)
+        {
+            Debug.LogWarning($"TextAsset not found at path '{assetPath}' for language: {language}.");
+            return null;
+        }
+
         try
         {
-            string jsonString = File.ReadAllText(filePath);
+            string jsonString = jsonTextAsset.text;
             var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
             if (data == null)
             {
-                Debug.LogError($"Failed to deserialize localization data from {filePath}. JSON format might be incorrect.");
+                Debug.LogError($"Failed to deserialize localization data from '{assetPath}'. JSON format might be incorrect.");
                 return null;
             }
             return data;
         }
-        catch (System.IO.IOException ex)
+        catch (System.Exception ex) when (ex is System.IO.IOException || ex is Newtonsoft.Json.JsonException)
         {
-            Debug.LogError($"Error reading localization file {filePath}: {ex.Message}");
-            return null;
-        }
-        catch (Newtonsoft.Json.JsonException ex)
-        {
-            Debug.LogError($"Error parsing localization file {filePath}: {ex.Message}");
+            Debug.LogError($"Error loading or parsing localization file '{assetPath}': {ex.Message}");
             return null;
         }
         catch (System.Exception ex)
         {
-            Debug.LogError($"An unexpected error occurred loading localization file {filePath}: {ex.Message}");
+            Debug.LogError($"An unexpected error occurred loading localization file '{assetPath}': {ex.Message}");
             return null;
         }
     }
