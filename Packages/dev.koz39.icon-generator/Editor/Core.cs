@@ -169,11 +169,6 @@ public static class Core
 
         camera.orthographicSize = finalOrthoSize;
 
-        foreach (var renderer in cameraObject.GetComponentsInChildren<SkinnedMeshRenderer>(true))
-        {
-            renderer.updateWhenOffscreen = true;
-        }
-
         return cameraObject;
     }
 
