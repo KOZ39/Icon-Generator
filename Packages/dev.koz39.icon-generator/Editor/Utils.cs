@@ -65,6 +65,9 @@ public static class Utils
         catch (System.Exception e)
         {
             Debug.LogError($"Error resizing texture: {e.Message}");
+            if (tex2D != null) {
+                Object.DestroyImmediate(tex2D);
+            }
             return null;
         }
         finally
