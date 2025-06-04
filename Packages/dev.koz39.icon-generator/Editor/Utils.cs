@@ -101,40 +101,6 @@ public static class Utils
         return Regex.Replace(name, invalidRegStr, "_");
     }
 
-    public static void SaveAndImportTexture(string filePath, byte[] bytes, Localization localization, string completionMsgKeyName, string importerWarningMsgKeyName, string failedMsgKeyName)
-    {
-        try
-        {
-            File.WriteAllBytes(filePath, bytes);
-            AssetDatabase.ImportAsset(filePath);
-
-            TextureImporter importer = AssetImporter.GetAtPath(filePath) as TextureImporter;
-            if (importer != null)
-            {
-                importer.alphaIsTransparency = true;
-                importer.textureType = TextureImporterType.Sprite;
-                importer.SaveAndReimport();
-            }
-            else
-            {
-                Debug.LogWarning(localization.GetLocalizedText(importerWarningMsgKeyName, filePath));
-            }
-            Debug.Log(localization.GetLocalizedText(completionMsgKeyName, filePath));
-        }
-        catch (System.IO.IOException ex)
-        {
-            Debug.LogError(localization.GetLocalizedText("ErrorSavingTextureFile", filePath, ex.Message));
-        }
-        catch (System.UnauthorizedAccessException ex)
-        {
-            Debug.LogError(localization.GetLocalizedText("PermissionErrorSavingTextureFile", filePath, ex.Message));
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError(localization.GetLocalizedText(failedMsgKeyName, e.Message, e.StackTrace));
-        }
-    }
-
     public static void SaveAndImportIconTexture(string filePath, byte[] bytes, Localization localization, bool pingAsset)
     {
         try
