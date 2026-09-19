@@ -1,20 +1,19 @@
 {
   "name": "dev.koz39.icon-generator",
-  "displayName": "KOZ39's Icon Generator",
+  "displayName": "Icon Generator",
+  "description": "A tool for easily generating icons.",
   "version": "1.4.1",
   "unity": "2022.3",
-  "description": "A tool for easily generating icons.",
-  "documentationUrl": "https://github.com/KOZ39/Icon-Generator",
-  "changelogUrl": "https://github.com/KOZ39/Icon-Generator/CHANGELOG.md",
-  "licensesUrl": "https://github.com/KOZ39/Icon-Generator/LICENSE",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.0"
   },
-  "gitDependencies": {},
-  "vpmDependencies": {},
   "author": {
     "name": "KOZ39",
     "email": "koz39c@gmail.com",
     "url": "https://github.com/KOZ39"
-  }
+  },
+  "documentationUrl": "https://github.com/KOZ39/Icon-Generator",
+  "changelogUrl": "https://github.com/KOZ39/Icon-Generator/blob/main/CHANGELOG.md",
+  "licenses": "MIT-0",
+  "licensesUrl": "https://github.com/KOZ39/Icon-Generator/blob/main/LICENSE"
 }
