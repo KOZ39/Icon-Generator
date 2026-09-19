@@ -13,7 +13,7 @@
 - カメラキャプチャ方向またはユーザー指定角度の設定
 
 ## 使用法
-1. https://koz39.github.io/Icon-Generator/ で「Add to VCC」、または同梱の.unitypackageをインポート。
+1. https://koz39.github.io/vpm-listing/ で「Add to VCC」、または同梱の.unitypackageをインポート。
 2. 上部の Tools メニューから "3D Obj to Icon" を選択します。
 3. ソースオブジェクトを指定した後、「アイコン生成」ボタンをクリックします。
 

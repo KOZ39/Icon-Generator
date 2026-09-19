@@ -13,7 +13,7 @@ A tool for easily generating icons.
 - Configure camera capture direction or custom angle settings.
 
 ## How to Use
-1. Visit https://koz39.github.io/Icon-Generator/ for "Add to VCC", or import the included .unitypackage.
+1. Visit https://koz39.github.io/vpm-listing/ for "Add to VCC", or import the included .unitypackage.
 2. Select "3D Obj to Icon" from the top Tools menu.
 3. Specify the source object, then click the "Generate Icon" button.
 
