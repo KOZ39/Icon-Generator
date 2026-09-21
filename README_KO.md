@@ -34,6 +34,3 @@ https://curiss.booth.pm/items/3217412
 
 Flat Ring
 https://um-by-gull.booth.pm/items/5454485
-
-## License
-[MIT](https://github.com/KOZ39/Icon-Generator/blob/main/LICENSE)
