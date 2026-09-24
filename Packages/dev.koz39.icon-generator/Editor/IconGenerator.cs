@@ -30,8 +30,7 @@ public class IconGenerator : EditorWindow
     [MenuItem("Tools/3D Obj to Icon")]
     private static void ShowWindow()
     {
-        var window = GetWindow<IconGenerator>("Icon Generator");
-        window.titleContent = new GUIContent("3D Obj to Icon");
+        var window = GetWindow<IconGenerator>();
         window.minSize = new Vector2(350, 670);
         window.Show();
     }
@@ -58,14 +57,7 @@ public class IconGenerator : EditorWindow
         root.Clear();
 
         Data.UILanguage savedLanguage = EditorPrefs.HasKey(Data.LANGUAGE_PREF_KEY) ? (Data.UILanguage)EditorPrefs.GetInt(Data.LANGUAGE_PREF_KEY) : Data.UILanguage.English;
-        if (savedLanguage == Data.UILanguage.Chinese)
-        {
-            titleContent = new GUIContent(localization.GetLocalizedText("WindowTitle"));
-        }
-        else
-        {
-            titleContent = new GUIContent("3D Obj to Icon");
-        }
+        titleContent = new GUIContent(localization.GetLocalizedText("WindowTitle"));
         languageField = new PopupField<Data.UILanguage>(localization.GetLocalizedText("UILanguage"));
         languageField.choices = System.Enum.GetValues(typeof(Data.UILanguage)).Cast<Data.UILanguage>().ToList();
         languageField.formatListItemCallback = FormatLanguage;
@@ -150,16 +142,15 @@ public class IconGenerator : EditorWindow
             EditorPrefs.SetInt(Data.ICON_SIZE_PREF_KEY, evt.newValue);
             UpdateIconThumbnailPreview();
         });
-        Utils.SetStyleMarginBottom(iconSizeField);
         root.Add(iconSizeField);
 
         captureInactiveObjectsToggle = new Toggle(localization.GetLocalizedText("CaptureInactiveObjects"));
+        captureInactiveObjectsToggle.tooltip = localization.GetLocalizedText("CaptureInactiveObjectsTooltip");
         captureInactiveObjectsToggle.value = EditorPrefs.GetBool(Data.CAPTURE_INACTIVE_OBJECTS_PREF_KEY, false);
         captureInactiveObjectsToggle.RegisterValueChangedCallback(evt => {
             EditorPrefs.SetBool(Data.CAPTURE_INACTIVE_OBJECTS_PREF_KEY, evt.newValue);
             UpdateIconThumbnailPreview();
         });
-        Utils.SetStyleMarginBottom(captureInactiveObjectsToggle);
         root.Add(captureInactiveObjectsToggle);
 
         Utils.AddSectionTitle(root, localization.GetLocalizedText("CameraSettings"));
@@ -215,31 +206,12 @@ public class IconGenerator : EditorWindow
 
     private string FormatLanguage(Data.UILanguage language)
     {
-        if (EditorPrefs.HasKey(Data.LANGUAGE_PREF_KEY) &&
-            (Data.UILanguage)EditorPrefs.GetInt(Data.LANGUAGE_PREF_KEY) == Data.UILanguage.Chinese &&
-            language == Data.UILanguage.Chinese)
-        {
-            return localization.GetLocalizedText("ChineseLanguage");
-        }
-
         return Data.LanguageMapping.TryGetValue(language, out var info) ? info.DisplayName : language.ToString();
     }
 
     private string FormatCaptureDirection(Data.CaptureDirection direction)
     {
-        if (EditorPrefs.HasKey(Data.LANGUAGE_PREF_KEY) &&
-            (Data.UILanguage)EditorPrefs.GetInt(Data.LANGUAGE_PREF_KEY) == Data.UILanguage.Chinese)
-        {
-            switch (direction)
-            {
-                case Data.CaptureDirection.Front: return localization.GetLocalizedText("FrontDirection");
-                case Data.CaptureDirection.Rear: return localization.GetLocalizedText("RearDirection");
-                case Data.CaptureDirection.Left: return localization.GetLocalizedText("LeftDirection");
-                case Data.CaptureDirection.Right: return localization.GetLocalizedText("RightDirection");
-            }
-        }
-
-        return direction.ToString();
+        return localization.GetLocalizedText(direction + "Direction");
     }
 
     private void UpdateIconThumbnailPreview()
@@ -283,14 +255,14 @@ public class IconGenerator : EditorWindow
 
         try
         {
-            tempCombinedParent = Core.CreateTemporaryCombinedObject(sourceObject, objectsToProcess);
+            tempCombinedParent = Core.CreateTemporaryCombinedObject(sourceObject, objectsToProcess, captureInactiveObjectsToggle.value);
             if (tempCombinedParent == null)
             {
                 Debug.LogWarning(localization.GetLocalizedText("NoActiveProcessableObjectsCombined"));
                 return;
             }
 
-            iconThumbnailTexture = Core.GenerateIconInternal(tempCombinedParent, currentIconSize, selectedDirection, useCustom, customAngle, currentTempResolution, currentZoomLevel, localization);
+            iconThumbnailTexture = Core.GenerateIconInternal(tempCombinedParent, currentIconSize, selectedDirection, useCustom, customAngle, currentTempResolution, currentZoomLevel, localization, captureInactiveObjectsToggle.value);
 
             if (iconThumbnailTexture != null)
             {
@@ -346,7 +318,7 @@ public class IconGenerator : EditorWindow
         Data.CaptureDirection selectedDirection = (Data.CaptureDirection)captureDirectionField.value;
 
         bool captureInactiveObjects = captureInactiveObjectsToggle.value;
-        List<GameObject> objectsToProcessForIndividual = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjects);
+        List<GameObject> objectsToProcessForIndividual = Processor.FindObjectsToProcess(sourceObject, includeInactive: true);
         List<GameObject> objectsToProcessForCombined = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjects);
 
         if (objectsToProcessForIndividual.Count == 0 && objectsToProcessForCombined.Count == 0)
@@ -362,7 +334,7 @@ public class IconGenerator : EditorWindow
 
         if (generateCombined)
         {
-            Processor.GenerateCombinedIcon(sourceObject, objectsToProcessForCombined, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization);
+            Processor.GenerateCombinedIcon(sourceObject, objectsToProcessForCombined, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization, captureInactiveObjects);
         }
 
         Processor.GenerateIndividualIcons(objectsToProcessForIndividual, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, generateCombined, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization);

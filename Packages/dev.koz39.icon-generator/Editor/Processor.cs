@@ -58,7 +58,7 @@ public static class Processor
         return objectsToProcess;
     }
 
-    public static void GenerateCombinedIcon(GameObject sourceObject, List<GameObject> objectsToCombine, int targetSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, string outputDirectory, int tempResolution, int zoom, bool goToOutputDirectory, Localization localization)
+    public static void GenerateCombinedIcon(GameObject sourceObject, List<GameObject> objectsToCombine, int targetSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, string outputDirectory, int tempResolution, int zoom, bool goToOutputDirectory, Localization localization, bool captureInactiveObjects = false)
     {
         if (objectsToCombine == null || objectsToCombine.Count == 0)
         {
@@ -69,14 +69,14 @@ public static class Processor
         GameObject tempCombinedParent = null;
         try
         {
-            tempCombinedParent = Core.CreateTemporaryCombinedObject(sourceObject, objectsToCombine);
+            tempCombinedParent = Core.CreateTemporaryCombinedObject(sourceObject, objectsToCombine, captureInactiveObjects);
             if (tempCombinedParent == null)
             {
                 Debug.LogWarning(localization.GetLocalizedText("NoActiveProcessableObjectsCombined"));
                 return;
             }
 
-            Texture2D combinedIcon = Core.GenerateIconInternal(tempCombinedParent, targetSize, direction, useCustomAngle, customAngle, tempResolution, zoom, localization);
+            Texture2D combinedIcon = Core.GenerateIconInternal(tempCombinedParent, targetSize, direction, useCustomAngle, customAngle, tempResolution, zoom, localization, captureInactiveObjects);
 
             if (combinedIcon != null)
             {

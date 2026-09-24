@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Rendering;
 
 public static class Core
 {
-    public static GameObject CreateTemporaryCombinedObject(GameObject sourceObject, List<GameObject> objectsToCombine)
+    public static GameObject CreateTemporaryCombinedObject(GameObject sourceObject, List<GameObject> objectsToCombine, bool captureInactiveObjects = false)
     {
         if (objectsToCombine == null || objectsToCombine.Count == 0)
         {
@@ -18,20 +18,23 @@ public static class Core
 
         foreach (GameObject obj in objectsToCombine)
         {
-            if (obj != null)
+            if (obj != null && (captureInactiveObjects || obj.activeInHierarchy))
             {
                 GameObject clonedObj = Object.Instantiate(obj, tempCombinedParent.transform);
                 clonedObj.transform.localPosition = obj.transform.localPosition;
                 clonedObj.transform.localRotation = obj.transform.localRotation;
                 clonedObj.transform.localScale = obj.transform.localScale;
-                Utils.SetSelfAndChildrenActive(clonedObj, true);
+                if (captureInactiveObjects)
+                    Utils.SetSelfAndChildrenActive(clonedObj, true);
+                else
+                    clonedObj.SetActive(true);
                 Utils.ChangeLayerRecursively(clonedObj, Data.CAPTURE_LAYER);
             }
         }
         return tempCombinedParent;
     }
 
-    public static Texture2D GenerateIconInternal(GameObject objectToCapture, int finalSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, int tempResolution, int zoom, Localization localization)
+    public static Texture2D GenerateIconInternal(GameObject objectToCapture, int finalSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, int tempResolution, int zoom, Localization localization, bool captureInactiveObjects = true)
     {
         GameObject clonedObject = null;
         GameObject cameraObject = null;
@@ -42,15 +45,18 @@ public static class Core
         {
             clonedObject = Object.Instantiate(objectToCapture);
             clonedObject.name = objectToCapture.name + "_IconClone";
-            Utils.SetSelfAndChildrenActive(clonedObject, true);
+            if (captureInactiveObjects)
+                Utils.SetSelfAndChildrenActive(clonedObject, true);
+            else
+                clonedObject.SetActive(true);
             Utils.ChangeLayerRecursively(clonedObject, Data.CAPTURE_LAYER);
 
-            foreach (var renderer in clonedObject.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            foreach (var renderer in clonedObject.GetComponentsInChildren<SkinnedMeshRenderer>(false))
             {
                 renderer.updateWhenOffscreen = true;
             }
 
-            var allRenderers = clonedObject.GetComponentsInChildren<Renderer>(true);
+            var allRenderers = clonedObject.GetComponentsInChildren<Renderer>(false);
             if (allRenderers.Length == 0)
             {
                 Debug.LogWarning(localization.GetLocalizedText("NoRenderersInClone"));

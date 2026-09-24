@@ -37,5 +37,11 @@
   "NoActiveProcessableObjectsCombined": "No active objects found for combined icon generation.",
   "CombinedIcon": "Combined Icon",
   "IconThumbnail": "Icon Thumbnail",
-  "CaptureInactiveObjects": "Capture Inactive Objects"
+  "CaptureInactiveObjects": "Include Inactive Objects",
+  "CaptureInactiveObjectsTooltip": "Applies to the preview and combined icon. Individual icons always include inactive objects.",
+  "WindowTitle": "3D Obj to Icon",
+  "FrontDirection": "Front",
+  "RearDirection": "Rear",
+  "LeftDirection": "Left",
+  "RightDirection": "Right"
 }

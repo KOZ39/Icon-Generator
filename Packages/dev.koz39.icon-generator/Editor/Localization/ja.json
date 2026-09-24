@@ -37,5 +37,6 @@
   "NoActiveProcessableObjectsCombined": "結合アイコンの生成に必要なアクティブオブジェクトが見つかりませんでした。",
   "CombinedIcon": "結合アイコン",
   "IconThumbnail": "アイコンサムネイル",
-  "CaptureInactiveObjects": "非アクティブなオブジェクトをキャプチャ"
+  "CaptureInactiveObjects": "非アクティブを含める",
+  "CaptureInactiveObjectsTooltip": "プレビューと結合アイコンに適用されます。個別アイコンは常に非アクティブなオブジェクトも生成します。"
 }

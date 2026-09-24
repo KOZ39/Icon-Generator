@@ -63,6 +63,6 @@ public static class Data
         { UILanguage.English, new LanguageInfo { Code = "en", DisplayName = "English", Guid = LOCALIZATION_EN_JSON_GUID } },
         { UILanguage.Korean, new LanguageInfo { Code = "ko", DisplayName = "한국어 (Korean)", Guid = LOCALIZATION_KO_JSON_GUID } },
         { UILanguage.Japanese, new LanguageInfo { Code = "ja", DisplayName = "日本語 (Japanese)", Guid = LOCALIZATION_JA_JSON_GUID } },
-        { UILanguage.Chinese, new LanguageInfo { Code = "zh-CN", DisplayName = "Chinese (Simplified)", Guid = LOCALIZATION_ZH_JSON_GUID } }
+        { UILanguage.Chinese, new LanguageInfo { Code = "zh-CN", DisplayName = "简体中文 (Chinese)", Guid = LOCALIZATION_ZH_JSON_GUID } }
     };
 }

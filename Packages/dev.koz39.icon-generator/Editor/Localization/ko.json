@@ -37,5 +37,6 @@
   "NoActiveProcessableObjectsCombined": "결합 아이콘 생성을 위한 활성 오브젝트가 없습니다.",
   "CombinedIcon": "결합된 아이콘",
   "IconThumbnail": "아이콘 썸네일",
-  "CaptureInactiveObjects": "비활성 오브젝트 캡처"
+  "CaptureInactiveObjects": "비활성 오브젝트 포함",
+  "CaptureInactiveObjectsTooltip": "미리보기와 합성 아이콘에 적용됩니다. 개별 아이콘은 항상 비활성 오브젝트도 생성합니다."
 }
