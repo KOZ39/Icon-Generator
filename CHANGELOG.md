@@ -1,4 +1,14 @@
-﻿## v1.4.0
+﻿## v1.5.0
+- 中国語（簡体字）に対応しました
+- 중국어 간체 지원 추가
+- Added Simplified Chinese support
+- プレビューと結合アイコンに非アクティブなオブジェクトを含めるオプションを追加しました
+- 미리보기와 합성 아이콘에 비활성 오브젝트를 포함하는 옵션 추가
+- Added an option to include inactive objects in the preview and combined icon
+
+Thanks to [@vosd04](https://github.com/vosd04) for the contribution in [#1](https://github.com/KOZ39/Icon-Generator/pull/1)!
+
+## v1.4.0
 - キャプチャ解像度とアイコンサイズをプリセットに置き換えました
 - 캡처 해상도 및 아이콘 크기를 프리셋으로 대체
 - Replaced capture resolution and icon size with presets
