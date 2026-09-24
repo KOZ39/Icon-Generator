@@ -18,13 +18,13 @@ public static class Core
 
         foreach (GameObject obj in objectsToCombine)
         {
-            if (obj != null && obj.activeInHierarchy)
+            if (obj != null)
             {
                 GameObject clonedObj = Object.Instantiate(obj, tempCombinedParent.transform);
                 clonedObj.transform.localPosition = obj.transform.localPosition;
                 clonedObj.transform.localRotation = obj.transform.localRotation;
                 clonedObj.transform.localScale = obj.transform.localScale;
-                clonedObj.SetActive(true);
+                Utils.SetSelfAndChildrenActive(clonedObj, true);
                 Utils.ChangeLayerRecursively(clonedObj, Data.CAPTURE_LAYER);
             }
         }

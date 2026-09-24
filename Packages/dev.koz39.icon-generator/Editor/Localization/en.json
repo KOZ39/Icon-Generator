@@ -36,5 +36,6 @@
   "ZoomLevel": "Zoom (%)",
   "NoActiveProcessableObjectsCombined": "No active objects found for combined icon generation.",
   "CombinedIcon": "Combined Icon",
-  "IconThumbnail": "Icon Thumbnail"
+  "IconThumbnail": "Icon Thumbnail",
+  "CaptureInactiveObjects": "Capture Inactive Objects"
 }

@@ -18,9 +18,11 @@ public static class Data
     public const string CUSTOM_ANGLE_PREF_KEY_Y = "IconGenCustomAngleY";
     public const string CUSTOM_ANGLE_PREF_KEY_Z = "IconGenCustomAngleZ";
     public const string PING_ASSET_PREF_KEY = "IconGenPingAsset";
+    public const string CAPTURE_INACTIVE_OBJECTS_PREF_KEY = "IconGenCaptureInactiveObjects";
     public const string LOCALIZATION_EN_JSON_GUID = "d20fd17cbeee2c348963acb1ff23e006";
     public const string LOCALIZATION_KO_JSON_GUID = "92fe17625d1955140844bb5347c8262e";
     public const string LOCALIZATION_JA_JSON_GUID = "993dabeee68601f4eb8fab9386ec6a2e";
+    public const string LOCALIZATION_ZH_JSON_GUID = "ca4f7c3e7e4a4779bf3db4aebc5dcd64";
 
 
     public static readonly List<int> ResolutionOptions = new List<int>
@@ -45,7 +47,8 @@ public static class Data
     {
         English,
         Korean,
-        Japanese
+        Japanese,
+        Chinese
     }
 
     public struct LanguageInfo
@@ -59,6 +62,7 @@ public static class Data
     {
         { UILanguage.English, new LanguageInfo { Code = "en", DisplayName = "English", Guid = LOCALIZATION_EN_JSON_GUID } },
         { UILanguage.Korean, new LanguageInfo { Code = "ko", DisplayName = "한국어 (Korean)", Guid = LOCALIZATION_KO_JSON_GUID } },
-        { UILanguage.Japanese, new LanguageInfo { Code = "ja", DisplayName = "日本語 (Japanese)", Guid = LOCALIZATION_JA_JSON_GUID } }
+        { UILanguage.Japanese, new LanguageInfo { Code = "ja", DisplayName = "日本語 (Japanese)", Guid = LOCALIZATION_JA_JSON_GUID } },
+        { UILanguage.Chinese, new LanguageInfo { Code = "zh-CN", DisplayName = "Chinese (Simplified)", Guid = LOCALIZATION_ZH_JSON_GUID } }
     };
 }
