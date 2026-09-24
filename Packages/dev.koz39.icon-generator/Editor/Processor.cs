@@ -44,7 +44,9 @@ public static class Processor
         {
             foreach (Renderer r in renderersInHierarchy)
             {
-                if (r != null && r.gameObject != null && !r.gameObject.CompareTag("EditorOnly") && !(r is ParticleSystemRenderer))
+                if (r != null && r.gameObject != null &&
+                    (includeInactive || r.gameObject.activeInHierarchy) &&
+                    !r.gameObject.CompareTag("EditorOnly") && !(r is ParticleSystemRenderer))
                 {
                     if (processedObjects.Add(r.gameObject))
                     {

@@ -20,11 +20,12 @@ public class IconGenerator : EditorWindow
     private PopupField<int> tempCaptureResolutionField;
     private IntegerField zoomLevelField;
     private PopupField<int> iconSizeField;
-    private EnumField captureDirectionField;
+    private PopupField<Data.CaptureDirection> captureDirectionField;
     private Toggle useCustomAngleToggle;
     private Vector3Field customCameraAngleField;
     private Button runButton;
     private Toggle goToOutputDirectory;
+    private Toggle captureInactiveObjectsToggle;
 
     [MenuItem("Tools/3D Obj to Icon")]
     private static void ShowWindow()
@@ -57,10 +58,18 @@ public class IconGenerator : EditorWindow
         root.Clear();
 
         Data.UILanguage savedLanguage = EditorPrefs.HasKey(Data.LANGUAGE_PREF_KEY) ? (Data.UILanguage)EditorPrefs.GetInt(Data.LANGUAGE_PREF_KEY) : Data.UILanguage.English;
+        if (savedLanguage == Data.UILanguage.Chinese)
+        {
+            titleContent = new GUIContent(localization.GetLocalizedText("WindowTitle"));
+        }
+        else
+        {
+            titleContent = new GUIContent("3D Obj to Icon");
+        }
         languageField = new PopupField<Data.UILanguage>(localization.GetLocalizedText("UILanguage"));
         languageField.choices = System.Enum.GetValues(typeof(Data.UILanguage)).Cast<Data.UILanguage>().ToList();
-        languageField.formatListItemCallback = lang => Data.LanguageMapping.TryGetValue(lang, out var info) ? info.DisplayName : lang.ToString();
-        languageField.formatSelectedValueCallback = lang => Data.LanguageMapping.TryGetValue(lang, out var info) ? info.DisplayName : lang.ToString();
+        languageField.formatListItemCallback = FormatLanguage;
+        languageField.formatSelectedValueCallback = FormatLanguage;
         languageField.value = savedLanguage;
         languageField.RegisterValueChangedCallback(evt => {
             EditorPrefs.SetInt(Data.LANGUAGE_PREF_KEY, (int)evt.newValue);
@@ -144,11 +153,24 @@ public class IconGenerator : EditorWindow
         Utils.SetStyleMarginBottom(iconSizeField);
         root.Add(iconSizeField);
 
+        captureInactiveObjectsToggle = new Toggle(localization.GetLocalizedText("CaptureInactiveObjects"));
+        captureInactiveObjectsToggle.value = EditorPrefs.GetBool(Data.CAPTURE_INACTIVE_OBJECTS_PREF_KEY, false);
+        captureInactiveObjectsToggle.RegisterValueChangedCallback(evt => {
+            EditorPrefs.SetBool(Data.CAPTURE_INACTIVE_OBJECTS_PREF_KEY, evt.newValue);
+            UpdateIconThumbnailPreview();
+        });
+        Utils.SetStyleMarginBottom(captureInactiveObjectsToggle);
+        root.Add(captureInactiveObjectsToggle);
+
         Utils.AddSectionTitle(root, localization.GetLocalizedText("CameraSettings"));
         Data.CaptureDirection savedDirection = EditorPrefs.HasKey(Data.CAPTURE_DIRECTION_PREF_KEY) ? (Data.CaptureDirection)EditorPrefs.GetInt(Data.CAPTURE_DIRECTION_PREF_KEY) : Data.CaptureDirection.Front;
-        captureDirectionField = new EnumField(localization.GetLocalizedText("CaptureDirection"), savedDirection);
+        captureDirectionField = new PopupField<Data.CaptureDirection>(localization.GetLocalizedText("CaptureDirection"));
+        captureDirectionField.choices = System.Enum.GetValues(typeof(Data.CaptureDirection)).Cast<Data.CaptureDirection>().ToList();
+        captureDirectionField.formatListItemCallback = FormatCaptureDirection;
+        captureDirectionField.formatSelectedValueCallback = FormatCaptureDirection;
+        captureDirectionField.value = savedDirection;
         captureDirectionField.RegisterValueChangedCallback(evt => {
-            EditorPrefs.SetInt(Data.CAPTURE_DIRECTION_PREF_KEY, (int)(Data.CaptureDirection)evt.newValue);
+            EditorPrefs.SetInt(Data.CAPTURE_DIRECTION_PREF_KEY, (int)evt.newValue);
             UpdateIconThumbnailPreview();
         });
         root.Add(captureDirectionField);
@@ -191,6 +213,35 @@ public class IconGenerator : EditorWindow
         UpdateIconThumbnailPreview();
     }
 
+    private string FormatLanguage(Data.UILanguage language)
+    {
+        if (EditorPrefs.HasKey(Data.LANGUAGE_PREF_KEY) &&
+            (Data.UILanguage)EditorPrefs.GetInt(Data.LANGUAGE_PREF_KEY) == Data.UILanguage.Chinese &&
+            language == Data.UILanguage.Chinese)
+        {
+            return localization.GetLocalizedText("ChineseLanguage");
+        }
+
+        return Data.LanguageMapping.TryGetValue(language, out var info) ? info.DisplayName : language.ToString();
+    }
+
+    private string FormatCaptureDirection(Data.CaptureDirection direction)
+    {
+        if (EditorPrefs.HasKey(Data.LANGUAGE_PREF_KEY) &&
+            (Data.UILanguage)EditorPrefs.GetInt(Data.LANGUAGE_PREF_KEY) == Data.UILanguage.Chinese)
+        {
+            switch (direction)
+            {
+                case Data.CaptureDirection.Front: return localization.GetLocalizedText("FrontDirection");
+                case Data.CaptureDirection.Rear: return localization.GetLocalizedText("RearDirection");
+                case Data.CaptureDirection.Left: return localization.GetLocalizedText("LeftDirection");
+                case Data.CaptureDirection.Right: return localization.GetLocalizedText("RightDirection");
+            }
+        }
+
+        return direction.ToString();
+    }
+
     private void UpdateIconThumbnailPreview()
     {
         if (iconThumbnailPreview != null && iconThumbnailPreview.image != null)
@@ -211,7 +262,7 @@ public class IconGenerator : EditorWindow
             return;
         }
 
-        List<GameObject> objectsToProcess = Processor.FindObjectsToProcess(sourceObject, includeInactive: false);
+        List<GameObject> objectsToProcess = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjectsToggle.value);
 
         if (objectsToProcess.Count == 0)
         {
@@ -294,8 +345,9 @@ public class IconGenerator : EditorWindow
         Vector3 customAngle = customCameraAngleField.value;
         Data.CaptureDirection selectedDirection = (Data.CaptureDirection)captureDirectionField.value;
 
-        List<GameObject> objectsToProcessForIndividual = Processor.FindObjectsToProcess(sourceObject, includeInactive: true);
-        List<GameObject> objectsToProcessForCombined = Processor.FindObjectsToProcess(sourceObject, includeInactive: false);
+        bool captureInactiveObjects = captureInactiveObjectsToggle.value;
+        List<GameObject> objectsToProcessForIndividual = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjects);
+        List<GameObject> objectsToProcessForCombined = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjects);
 
         if (objectsToProcessForIndividual.Count == 0 && objectsToProcessForCombined.Count == 0)
         {
