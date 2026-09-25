@@ -1,6 +1,11 @@
-﻿## v1.5.0
+﻿## v1.5.1
+- 非アクティブなオブジェクトを含めるオプションが個別アイコンの生成にのみ適用されるよう修正しました
+- 비활성 오브젝트 포함 옵션을 개별 아이콘 생성에만 적용하도록 수정
+- Fixed the Include Inactive Objects option to apply only to individual icon generation
+
+## v1.5.0
 - 中国語（簡体字）に対応しました
-- 중국어 간체 지원 추가
+- 중국어(간체) 지원 추가
 - Added Simplified Chinese support
 - プレビューと結合アイコンに非アクティブなオブジェクトを含めるオプションを追加しました
 - 미리보기와 합성 아이콘에 비활성 오브젝트를 포함하는 옵션 추가
