@@ -21,5 +21,5 @@
   "ProcessingIndividual": "正在处理对象：",
   "FinalizingProgress": "正在完成：",
   "CaptureInactiveObjects": "包含未激活对象",
-  "CaptureInactiveObjectsTooltip": "适用于预览和合成图标。单独生成图标时，始终包含未激活的对象。"
+  "CaptureInactiveObjectsTooltip": "生成单独图标时包含未激活的对象。预览和合成图标始终仅包含已激活的对象。"
 }

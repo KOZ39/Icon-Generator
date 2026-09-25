@@ -105,7 +105,7 @@ public static class Processor
         }
     }
 
-    public static void GenerateIndividualIcons(List<GameObject> objectsToProcess, int targetSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, string outputDirectory, bool generatedCombined, int tempResolution, int zoom, bool goToOutputDirectory, Localization localization)
+    public static void GenerateIndividualIcons(List<GameObject> objectsToProcess, int targetSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, string outputDirectory, bool generatedCombined, int tempResolution, int zoom, bool goToOutputDirectory, Localization localization, bool captureInactiveObjects = true)
     {
         for (int i = 0; i < objectsToProcess.Count; i++)
         {
@@ -122,7 +122,7 @@ public static class Processor
             Texture2D generatedIcon = null;
             try
             {
-                generatedIcon = Core.GenerateIconInternal(currentObject, targetSize, direction, useCustomAngle, customAngle, tempResolution, zoom, localization);
+                generatedIcon = Core.GenerateIconInternal(currentObject, targetSize, direction, useCustomAngle, customAngle, tempResolution, zoom, localization, captureInactiveObjects);
 
                 if (generatedIcon != null)
                 {

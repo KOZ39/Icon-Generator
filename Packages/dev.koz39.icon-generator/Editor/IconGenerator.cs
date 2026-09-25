@@ -149,7 +149,6 @@ public class IconGenerator : EditorWindow
         captureInactiveObjectsToggle.value = EditorPrefs.GetBool(Data.CAPTURE_INACTIVE_OBJECTS_PREF_KEY, false);
         captureInactiveObjectsToggle.RegisterValueChangedCallback(evt => {
             EditorPrefs.SetBool(Data.CAPTURE_INACTIVE_OBJECTS_PREF_KEY, evt.newValue);
-            UpdateIconThumbnailPreview();
         });
         root.Add(captureInactiveObjectsToggle);
 
@@ -234,7 +233,7 @@ public class IconGenerator : EditorWindow
             return;
         }
 
-        List<GameObject> objectsToProcess = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjectsToggle.value);
+        List<GameObject> objectsToProcess = Processor.FindObjectsToProcess(sourceObject, includeInactive: false);
 
         if (objectsToProcess.Count == 0)
         {
@@ -255,14 +254,14 @@ public class IconGenerator : EditorWindow
 
         try
         {
-            tempCombinedParent = Core.CreateTemporaryCombinedObject(sourceObject, objectsToProcess, captureInactiveObjectsToggle.value);
+            tempCombinedParent = Core.CreateTemporaryCombinedObject(sourceObject, objectsToProcess, captureInactiveObjects: false);
             if (tempCombinedParent == null)
             {
                 Debug.LogWarning(localization.GetLocalizedText("NoActiveProcessableObjectsCombined"));
                 return;
             }
 
-            iconThumbnailTexture = Core.GenerateIconInternal(tempCombinedParent, currentIconSize, selectedDirection, useCustom, customAngle, currentTempResolution, currentZoomLevel, localization, captureInactiveObjectsToggle.value);
+            iconThumbnailTexture = Core.GenerateIconInternal(tempCombinedParent, currentIconSize, selectedDirection, useCustom, customAngle, currentTempResolution, currentZoomLevel, localization, captureInactiveObjects: false);
 
             if (iconThumbnailTexture != null)
             {
@@ -318,8 +317,8 @@ public class IconGenerator : EditorWindow
         Data.CaptureDirection selectedDirection = (Data.CaptureDirection)captureDirectionField.value;
 
         bool captureInactiveObjects = captureInactiveObjectsToggle.value;
-        List<GameObject> objectsToProcessForIndividual = Processor.FindObjectsToProcess(sourceObject, includeInactive: true);
-        List<GameObject> objectsToProcessForCombined = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjects);
+        List<GameObject> objectsToProcessForIndividual = Processor.FindObjectsToProcess(sourceObject, includeInactive: captureInactiveObjects);
+        List<GameObject> objectsToProcessForCombined = Processor.FindObjectsToProcess(sourceObject, includeInactive: false);
 
         if (objectsToProcessForIndividual.Count == 0 && objectsToProcessForCombined.Count == 0)
         {
@@ -334,10 +333,10 @@ public class IconGenerator : EditorWindow
 
         if (generateCombined)
         {
-            Processor.GenerateCombinedIcon(sourceObject, objectsToProcessForCombined, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization, captureInactiveObjects);
+            Processor.GenerateCombinedIcon(sourceObject, objectsToProcessForCombined, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization, captureInactiveObjects: false);
         }
 
-        Processor.GenerateIndividualIcons(objectsToProcessForIndividual, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, generateCombined, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization);
+        Processor.GenerateIndividualIcons(objectsToProcessForIndividual, targetSize, selectedDirection, useCustom, customAngle, outputDirectory, generateCombined, currentTempResolution, currentZoomLevel, goToOutputDirectory.value, localization, captureInactiveObjects);
 
         EditorUtility.ClearProgressBar();
     }

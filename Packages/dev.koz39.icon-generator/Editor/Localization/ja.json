@@ -38,5 +38,5 @@
   "CombinedIcon": "結合アイコン",
   "IconThumbnail": "アイコンサムネイル",
   "CaptureInactiveObjects": "非アクティブを含める",
-  "CaptureInactiveObjectsTooltip": "プレビューと結合アイコンに適用されます。個別アイコンは常に非アクティブなオブジェクトも生成します。"
+  "CaptureInactiveObjectsTooltip": "個別アイコンの生成時に非アクティブなオブジェクトも含めます。プレビューと結合アイコンには常にアクティブなオブジェクトのみ含まれます。"
 }

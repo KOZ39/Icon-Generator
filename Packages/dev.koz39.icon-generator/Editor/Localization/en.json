@@ -38,7 +38,7 @@
   "CombinedIcon": "Combined Icon",
   "IconThumbnail": "Icon Thumbnail",
   "CaptureInactiveObjects": "Include Inactive Objects",
-  "CaptureInactiveObjectsTooltip": "Applies to the preview and combined icon. Individual icons always include inactive objects.",
+  "CaptureInactiveObjectsTooltip": "Includes inactive objects when generating individual icons. The preview and combined icon always include only active objects.",
   "WindowTitle": "3D Obj to Icon",
   "FrontDirection": "Front",
   "RearDirection": "Rear",
