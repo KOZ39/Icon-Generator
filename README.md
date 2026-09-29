@@ -2,6 +2,10 @@
 
 English | [한국어](README_KO.md) | [日本語](README_JA.md)
 
+> [!WARNING]
+> Support for v1 has ended.\
+> v1.5.2 is the final release and will not receive further updates or fixes.
+
 A tool for easily generating icons.
 
 ## Requirements
