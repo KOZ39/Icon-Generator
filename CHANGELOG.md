@@ -1,4 +1,15 @@
-﻿## v1.5.1
+﻿## v1.5.2
+- ボーンに取り付けたアクセサリーが結合アイコンで誤った位置に表示される問題を修正しました
+- 본에 부착된 액세서리가 합성 아이콘에서 잘못된 위치에 표시되는 문제 수정
+- Fixed accessories attached to bones appearing in the wrong position in combined icons
+- EditorOnly の親の下にあるオブジェクトがアイコンに含まれる問題を修正しました
+- EditorOnly 부모 아래의 오브젝트가 아이콘에 포함되는 문제 수정
+- Fixed objects under EditorOnly parents being included in icons
+- アイコン生成時のメモリリークを修正しました
+- 아이콘 생성 시 메모리 누수 수정
+- Fixed a memory leak when generating icons
+
+## v1.5.1
 - 非アクティブなオブジェクトを含めるオプションが個別アイコンの生成にのみ適用されるよう修正しました
 - 비활성 오브젝트 포함 옵션을 개별 아이콘 생성에만 적용하도록 수정
 - Fixed the Include Inactive Objects option to apply only to individual icon generation
