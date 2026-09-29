@@ -46,7 +46,7 @@ public static class Processor
             {
                 if (r != null && r.gameObject != null &&
                     (includeInactive || r.gameObject.activeInHierarchy) &&
-                    !r.gameObject.CompareTag("EditorOnly") && !(r is ParticleSystemRenderer))
+                    !IsEditorOnly(r.transform, sourceObject.transform) && !(r is ParticleSystemRenderer))
                 {
                     if (processedObjects.Add(r.gameObject))
                     {
@@ -56,6 +56,24 @@ public static class Processor
             }
         }
         return objectsToProcess;
+    }
+
+    private static bool IsEditorOnly(Transform transform, Transform root)
+    {
+        Transform current = transform;
+        while (current != null)
+        {
+            if (current.CompareTag("EditorOnly"))
+            {
+                return true;
+            }
+            if (current == root)
+            {
+                break;
+            }
+            current = current.parent;
+        }
+        return false;
     }
 
     public static void GenerateCombinedIcon(GameObject sourceObject, List<GameObject> objectsToCombine, int targetSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, string outputDirectory, int tempResolution, int zoom, bool goToOutputDirectory, Localization localization, bool captureInactiveObjects = false)
@@ -81,6 +99,7 @@ public static class Processor
             if (combinedIcon != null)
             {
                 byte[] bytes = combinedIcon.EncodeToPNG();
+                Object.DestroyImmediate(combinedIcon);
                 string fileNameBase = Utils.SanitizeFileName(sourceObject.name);
                 string directionInfo = useCustomAngle ? $"CustomAngle({customAngle.x:0},{customAngle.y:0},{customAngle.z:0})" : direction.ToString().ToLower();
                 string filePath = Path.Combine(outputDirectory, $"{fileNameBase}_icon_{directionInfo}_{targetSize}x{targetSize}.png");
@@ -127,6 +146,8 @@ public static class Processor
                 if (generatedIcon != null)
                 {
                     byte[] bytes = generatedIcon.EncodeToPNG();
+                    Object.DestroyImmediate(generatedIcon);
+                    generatedIcon = null;
                     string fileNameBase = Utils.SanitizeFileName(currentObject.name);
                     string directionInfo = useCustomAngle ? $"CustomAngle({customAngle.x:0},{customAngle.y:0},{customAngle.z:0})" : direction.ToString().ToLower();
                     string filePath = Path.Combine(outputDirectory, $"{fileNameBase}_icon_{directionInfo}_{targetSize}x{targetSize}.png");

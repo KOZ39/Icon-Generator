@@ -18,12 +18,11 @@ public static class Core
 
         foreach (GameObject obj in objectsToCombine)
         {
-            if (obj != null && (captureInactiveObjects || obj.activeInHierarchy))
+            if (obj != null && !HasAncestorIn(obj, objectsToCombine) && (captureInactiveObjects || obj.activeInHierarchy))
             {
-                GameObject clonedObj = Object.Instantiate(obj, tempCombinedParent.transform);
-                clonedObj.transform.localPosition = obj.transform.localPosition;
-                clonedObj.transform.localRotation = obj.transform.localRotation;
-                clonedObj.transform.localScale = obj.transform.localScale;
+                GameObject clonedObj = Object.Instantiate(obj, obj.transform.position, obj.transform.rotation, tempCombinedParent.transform);
+                clonedObj.transform.localScale = obj.transform.lossyScale;
+                Utils.RemoveEditorOnlyChildren(clonedObj);
                 if (captureInactiveObjects)
                     Utils.SetSelfAndChildrenActive(clonedObj, true);
                 else
@@ -32,6 +31,18 @@ public static class Core
             }
         }
         return tempCombinedParent;
+    }
+
+    private static bool HasAncestorIn(GameObject obj, List<GameObject> candidates)
+    {
+        foreach (GameObject other in candidates)
+        {
+            if (other != null && other != obj && obj.transform.IsChildOf(other.transform))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static Texture2D GenerateIconInternal(GameObject objectToCapture, int finalSize, Data.CaptureDirection direction, bool useCustomAngle, Vector3 customAngle, int tempResolution, int zoom, Localization localization, bool captureInactiveObjects = true)
@@ -45,6 +56,7 @@ public static class Core
         {
             clonedObject = Object.Instantiate(objectToCapture);
             clonedObject.name = objectToCapture.name + "_IconClone";
+            Utils.RemoveEditorOnlyChildren(clonedObject);
             if (captureInactiveObjects)
                 Utils.SetSelfAndChildrenActive(clonedObject, true);
             else

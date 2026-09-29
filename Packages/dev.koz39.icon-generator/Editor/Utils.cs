@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEditor;
 using System.IO;
@@ -34,6 +35,26 @@ public static class Utils
         foreach (Transform child in go.transform)
         {
             SetSelfAndChildrenActive(child.gameObject, active);
+        }
+    }
+
+    public static void RemoveEditorOnlyChildren(GameObject root)
+    {
+        if (root == null) return;
+        List<GameObject> toDestroy = new List<GameObject>();
+        foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
+        {
+            if (t != root.transform && t.CompareTag("EditorOnly"))
+            {
+                toDestroy.Add(t.gameObject);
+            }
+        }
+        foreach (GameObject go in toDestroy)
+        {
+            if (go != null)
+            {
+                Object.DestroyImmediate(go);
+            }
         }
     }
 
