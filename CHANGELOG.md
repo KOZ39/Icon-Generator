@@ -1,65 +1,157 @@
-﻿## v1.5.2
-- ボーンに取り付けたアクセサリーが結合アイコンで誤った位置に表示される問題を修正しました
-- 본에 부착된 액세서리가 합성 아이콘에서 잘못된 위치에 표시되는 문제 수정
-- Fixed accessories attached to bones appearing in the wrong position in combined icons
-- EditorOnly の親の下にあるオブジェクトがアイコンに含まれる問題を修正しました
-- EditorOnly 부모 아래의 오브젝트가 아이콘에 포함되는 문제 수정
-- Fixed objects under EditorOnly parents being included in icons
-- アイコン生成時のメモリリークを修正しました
-- 아이콘 생성 시 메모리 누수 수정
-- Fixed a memory leak when generating icons
+# 변경 내역
 
-## v1.5.1
-- 非アクティブなオブジェクトを含めるオプションが個別アイコンの生成にのみ適用されるよう修正しました
-- 비활성 오브젝트 포함 옵션을 개별 아이콘 생성에만 적용하도록 수정
-- Fixed the Include Inactive Objects option to apply only to individual icon generation
+## v2.0.0 (2026-09-30)
 
-## v1.5.0
-- 中国語（簡体字）に対応しました
-- 중국어(간체) 지원 추가
-- Added Simplified Chinese support
-- プレビューと結合アイコンに非アクティブなオブジェクトを含めるオプションを追加しました
-- 미리보기와 합성 아이콘에 비활성 오브젝트를 포함하는 옵션 추가
-- Added an option to include inactive objects in the preview and combined icon
+### Added
 
-Thanks to [@vosd04](https://github.com/vosd04) for the contribution in [#1](https://github.com/KOZ39/Icon-Generator/pull/1)!
+- 여러 소스 등록 및 소스 트리
+    - 씬 오브젝트와 프리팹을 여러 개 끌어 놓아 추가
+    - 체크박스로 촬영할 항목 지정
+    - 이름 검색 및 필터 (메시, MA 컴포넌트, 체크 해제, 개별 카메라)
+    - 우클릭 메뉴 (일괄 체크, 씬 상태로 복원, 이 항목만 저장, 카메라 설정 복사·붙여넣기 등)
+- 생성 모드 (합성, 개별, 둘 다)
+    - 촬영 결과가 같은 항목은 한 번만 저장
+- 저장 범위 (모든 항목, 체크된 항목, 선택한 항목)
+- 미리보기
+    - 마우스로 이동·회전·확대/축소
+    - 미리보기 해상도
+    - 실제 크기
+    - 격자
+- 카메라
+    - 방향 프리셋 8종
+    - 항목별 개별 카메라 설정
+    - 보이는 부분 기준 구도
+    - 잘림 방지
+    - 여백 비율
+- 배경색
+- 투명 배경
+- 윤곽선
+- 블렌드 셰이프 가중치 무시 (단일 메시, 지정한 메시, 모든 메시)
+- 파일명 템플릿 (`{name}`, `{resolution}`, `{direction}`, `{date}`, `{time}`)
+- 중복 파일 처리 (항상 덮어쓰기, 덮어쓰기 확인, 번호 추가)
+    - 덮어쓰기 확인 창에서 기존 아이콘과 새 아이콘 비교
+- Modular Avatar 연동
+    - Shape Changer, Material Setter, Material Swap 반영
+    - Shape Changer로 삭제한 영역만 따로 촬영
+    - Material Setter·Swap으로 바뀐 모습을 따로 촬영
+    - 저장한 아이콘을 MA 메뉴에 연결 (확인 후 연결, 빈 아이콘만 자동 연결)
 
-## v1.4.0
-- キャプチャ解像度とアイコンサイズをプリセットに置き換えました
+### Changed
+
+- 메뉴 위치
+    - Tools > 3D Obj to Icon → Tools > Icon Generator
+- 기본 파일명
+    - `{이름}_icon_{방향}_{크기}x{크기}.png` → `{name}.png`
+- 설정 저장 위치
+    - EditorPrefs → ProjectSettings/IconGeneratorSettings.asset
+    - v1의 저장 폴더, 아이콘 해상도, 확대/축소, 카메라 회전, 언어 설정은 처음 실행할 때 옮겨짐
+- 비활성 오브젝트 포함 옵션을 체크 상태와 저장 범위로 대체
+- 아이콘 텍스처 압축
+    - 압축 안 함 → CompressedHQ
+    - v1으로 생성한 아이콘도 덮어쓸 때 변환
+
+### Removed
+
+- 캡처 해상도 설정 (아이콘 해상도로 바로 촬영)
+- 아이콘 생성 후 출력 디렉토리로 이동 옵션 (저장 설정 옆 ‘폴더로 이동’ 버튼으로 대체)
+
+## v1.5.2 (2026-09-29)
+
+### Fixed
+
+- 본에 부착된 액세서리가 합성 아이콘에서 잘못된 위치에 표시되는 문제
+- EditorOnly 부모 아래의 오브젝트가 아이콘에 포함되는 문제
+- 아이콘 생성 시 메모리 누수
+
+## v1.5.1 (2026-09-26)
+
+### Fixed
+
+- 비활성 오브젝트 포함 옵션이 미리보기와 합성 아이콘에도 적용되는 문제
+
+## v1.5.0 (2026-09-25)
+
+### Added
+
+- 중국어(간체)
+- 미리보기와 합성 아이콘에 비활성 오브젝트를 포함하는 옵션
+
+[@vosd04](https://github.com/vosd04)님의 기여 ([#1](https://github.com/KOZ39/Icon-Generator/pull/1))
+
+## v1.4.2 (2026-09-20)
+
+### Changed
+
+- 라이선스
+    - MIT → MIT-0
+
+## v1.4.1 (2025-06-05)
+
+### Fixed
+
+- 텍스처 크기 조정 실패 시 메모리 누수
+
+## v1.4.0 (2025-05-31)
+
+### Changed
+
 - 캡처 해상도 및 아이콘 크기를 프리셋으로 대체
-- Replaced capture resolution and icon size with presets
 
-## v1.3.1
-- GUIDに基づいてローカライズファイルを取得するように修正しました。
-- 현지화 파일을 GUID 기준으로 가져오도록 수정
-- Modified to fetch the localization files based on GUID.
+## v1.3.1 (2025-05-31)
 
-## v1.3
-- VCC経由でのインストールに対応しました。
-- VCC를 통한 설치 지원
-- Now supports installation via VCC.
+### Fixed
 
-## v1.2
-- アイコン生成時に、最適化された形式（スプライト）で保存されるよう改善しました。
-- 아이콘 생성 시, 최적화된 형식으로 저장되도록 개선
-- Icons are now saved in an optimized format when generated.
+- VPM으로 설치하면 현지화 파일을 불러오지 못하는 문제
 
-## v1.1.1
-- 単一オブジェクトのアイコン生成時のパフォーマンス改善
-- 하나의 오브젝트만 아이콘으로 생성하는 경우 성능 개선
-- Improved performance when generating an icon from a single object.
+## v1.3.0 (2025-05-31)
 
-## v1.1
-- アイコンのプレビューおよび拡大機能を追加しました。
-- 아이콘 미리보기 및 확대 기능 추가
-- Added icon preview and zoom features.
+### Changed
 
-## v1.0.2
-- カメラ設定のキャプチャ方向オプションが保存されない問題を修正しました。
-- 카메라 설정의 캡처 방향 옵션이 저장되지 않던 문제 수정
-- Fixed an issue where the capture direction option in the camera settings was not being saved.
+- VPM 패키지화
 
-## v1.0.1
-- ローカライズファイルを更新
-- 현지화 파일 업데이트
-- Updated localization files.
+## v1.2.0 (2025-05-29)
+
+### Changed
+
+- 아이콘 텍스처 유형
+    - Default → Sprite
+
+## v1.1.1 (2025-05-19)
+
+### Changed
+
+- 렌더러가 하나뿐일 때 합성 아이콘을 생략
+- 미리보기 제목
+    - 미리보기 → 아이콘 미리보기
+
+### Fixed
+
+- 합성 아이콘 관련 메시지의 현지화 문구 누락
+
+## v1.1.0 (2025-05-17)
+
+### Added
+
+- 아이콘 미리보기
+- 확대 (%) 설정
+
+### Changed
+
+- 투명한 여백을 잘라내던 구도를 확대 비율 기준으로 변경
+
+## v1.0.2 (2025-05-17)
+
+### Changed
+
+- 로그 메시지 현지화
+- 한국어·일본어 일부 문구
+
+### Fixed
+
+- 카메라 설정의 캡처 방향 옵션이 저장되지 않는 문제
+
+## v1.0.1 (2025-05-16)
+
+### Changed
+
+- 현지화 파일

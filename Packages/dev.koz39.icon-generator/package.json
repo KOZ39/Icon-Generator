@@ -1,11 +1,11 @@
 {
   "name": "dev.koz39.icon-generator",
   "displayName": "Icon Generator",
-  "description": "A tool for easily generating icons.",
-  "version": "1.5.2",
+  "description": "Icon generation tool for VRChat avatars and accessories.",
+  "version": "2.0.0",
   "unity": "2022.3",
   "dependencies": {
-    "com.unity.nuget.newtonsoft-json": "3.0.0"
+    "com.unity.nuget.newtonsoft-json": "3.0.2"
   },
   "author": {
     "name": "KOZ39",
@@ -15,5 +15,8 @@
   "documentationUrl": "https://github.com/KOZ39/Icon-Generator",
   "changelogUrl": "https://github.com/KOZ39/Icon-Generator/blob/main/CHANGELOG.md",
   "license": "MIT-0",
-  "licensesUrl": "https://github.com/KOZ39/Icon-Generator/blob/main/LICENSE"
+  "licensesUrl": "https://github.com/KOZ39/Icon-Generator/blob/main/LICENSE",
+  "legacyFolders": {
+    "Assets/KOZ39/IconGenerator/Editor": "a09b35e9f4a82e547a74a9a7bbbab0bc"
+  }
 }
