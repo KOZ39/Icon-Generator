@@ -2,39 +2,37 @@
 
 [English](README.md) | [한국어](README_KO.md) | 日本語
 
-> [!WARNING]
-> v1のサポートは終了しました。\
-> v1.5.2が最終リリースであり、今後のアップデートや不具合修正は行いません。
-
-アイコンを簡単に生成できるツールです。
+> VRChatのアバターやアクセサリーのアイコンを作成するUnityエディターツールです。
 
 ## 動作環境
-- Unity 2022.3.22f1
 
-## 機能
-- 親ソースオブジェクト指定時、子オブジェクトのアイコンも生成
-- アイコン出力ディレクトリおよびサイズ設定
-- カメラキャプチャ方向またはユーザー指定角度の設定
+- Unity 2022.3
+- Modular Avatar（任意）
 
-## 使用法
-1. https://koz39.github.io/vpm-listing/ で「Add to VCC」、または同梱の.unitypackageをインポート。
-2. 上部の Tools メニューから "3D Obj to Icon" を選択します。
-3. ソースオブジェクトを指定した後、「アイコン生成」ボタンをクリックします。
+## インストール
 
-## Credits
-このツールはGoogle Geminiの協力を得て制作されました。
+[VPMリポジトリ](https://koz39.github.io/vpm-listing/)で「Add to VCC」を押し、VCCまたはALCOMでIcon Generatorを追加します。
 
-カリン -Karin-【オリジナル3Dモデル】
-https://komado.booth.pm/items/3470989
+## 使い方
 
-【VRChat想定】アイコンを生成するツール
-https://yamanami4649.booth.pm/items/6105678
+1. 上部メニューの Tools > Icon Generator を開きます。
+2. ソースにアバターやアクセサリーをドラッグ＆ドロップします。
+3. プレビューを見ながらカメラとアイコンの設定を調整します。
+4. 「アイコンを生成」をクリックします。
 
-One Click Inventory
-https://goorm.booth.pm/items/5517179
+## 主な機能
 
-[VRChat] Sound Cat Bell
-https://curiss.booth.pm/items/3217412
+- 合成アイコンと個別アイコンを一度に生成
+- ソースツリーで撮影する項目をチェック・選択して範囲を指定
+- プレビュー上でマウスによるカメラの移動・回転・ズーム
+- 項目ごとに異なるカメラ設定
+- 見える部分を基準にした構図、見切れ防止、背景色、輪郭線
+- ファイル名テンプレートと重複ファイルの処理
+- Modular AvatarのShape Changer、Material Setter、Material Swapを反映
+- 保存したアイコンをMAメニューのアイコンに自動で設定
 
-Flat Ring
-https://um-by-gull.booth.pm/items/5454485
+## v1からのアップデート
+
+- メニューの場所が Tools > 3D Obj to Icon から Tools > Icon Generator に変わりました。
+- 保存フォルダ、アイコンサイズ、ズーム、カメラ角度、言語の設定は初回起動時に自動で引き継がれます。
+- デフォルトのファイル名が `{name}.png` に変わり、v1で作成したアイコンを上書きしません。

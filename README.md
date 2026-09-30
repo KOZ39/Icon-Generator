@@ -2,39 +2,37 @@
 
 English | [한국어](README_KO.md) | [日本語](README_JA.md)
 
-> [!WARNING]
-> Support for v1 has ended.\
-> v1.5.2 is the final release and will not receive further updates or fixes.
-
-A tool for easily generating icons.
+> A Unity editor tool for creating icons of VRChat avatars and accessories.
 
 ## Requirements
-- Unity 2022.3.22f1
 
-## Features
-- Generates icons for child objects when a parent source object is specified.
-- Configure icon output directory and size settings.
-- Configure camera capture direction or custom angle settings.
+- Unity 2022.3
+- Modular Avatar (optional)
+
+## Installation
+
+Click "Add to VCC" on the [VPM listing](https://koz39.github.io/vpm-listing/), then add Icon Generator in VCC or ALCOM.
 
 ## How to Use
-1. Visit https://koz39.github.io/vpm-listing/ for "Add to VCC", or import the included .unitypackage.
-2. Select "3D Obj to Icon" from the top Tools menu.
-3. Specify the source object, then click the "Generate Icon" button.
 
-## Credits
-This tool was created with the help of Google Gemini.
+1. Open Tools > Icon Generator from the top menu.
+2. Drag and drop an avatar or accessory into Sources.
+3. Adjust the camera and icon settings while checking the preview.
+4. Click Generate Icon.
 
-カリン -Karin-【オリジナル3Dモデル】
-https://komado.booth.pm/items/3470989
+## Features
 
-【VRChat想定】アイコンを生成するツール
-https://yamanami4649.booth.pm/items/6105678
+- Generate combined and individual icons at once
+- Choose what to capture by checking or selecting items in the source tree
+- Move, rotate and zoom the camera with the mouse in the preview
+- Per-item camera settings
+- Framing based on visible parts, crop prevention, background color and outline
+- File name templates and duplicate file handling
+- Reflects Modular Avatar Shape Changer, Material Setter and Material Swap
+- Automatically assigns saved icons to MA menu icons
 
-One Click Inventory
-https://goorm.booth.pm/items/5517179
+## Updating from v1
 
-[VRChat] Sound Cat Bell
-https://curiss.booth.pm/items/3217412
-
-Flat Ring
-https://um-by-gull.booth.pm/items/5454485
+- The menu has moved from Tools > 3D Obj to Icon to Tools > Icon Generator.
+- Output folder, icon size, zoom, camera angle and language settings are carried over automatically on first launch.
+- The default file name is now `{name}.png`, so icons made with v1 are not overwritten.

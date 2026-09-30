@@ -1,0 +1,84 @@
+.comparison-dialog {
+    padding: 8px;
+}
+
+.comparison-selection,
+.comparison-actions,
+.comparison-row {
+    flex-direction: row;
+}
+
+.comparison-selection-count,
+.comparison-list,
+.comparison-text {
+    flex-grow: 1;
+}
+
+.comparison-message,
+.comparison-search,
+.comparison-selection,
+.comparison-actions,
+.comparison-icon {
+    flex-shrink: 0;
+}
+
+.comparison-text {
+    flex-shrink: 1;
+}
+
+.comparison-selection,
+.comparison-row {
+    align-items: center;
+}
+
+.comparison-message {
+    white-space: normal;
+}
+
+.comparison-search {
+    min-width: 0;
+    margin-top: 6px;
+}
+
+.comparison-selection,
+.comparison-search-empty {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.comparison-selection-count {
+    -unity-text-align: middle-right;
+}
+
+.comparison-list {
+    min-height: 0;
+}
+
+.comparison-actions {
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+
+.comparison-arrow {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.comparison-text {
+    min-width: 0;
+    margin-left: 6px;
+}
+
+.comparison-name,
+.comparison-detail {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.comparison-name {
+    -unity-font-style: bold;
+}
+
+.comparison-name.elide-start {
+    -unity-text-overflow-position: start;
+}

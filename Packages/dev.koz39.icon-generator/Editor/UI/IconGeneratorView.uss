@@ -1,0 +1,483 @@
+.icon-generator {
+    min-width: 0;
+    min-height: 0;
+}
+
+.preview-options,
+.preview-actions,
+.preview-toggles,
+.preview-caption,
+.preview-controls-line,
+.section-heading-row,
+.save-settings-heading,
+#framing-options,
+#source-search-row,
+#source-sticky-root,
+.selection-row,
+.selection-row-actions,
+.color-toggle-row,
+.setting-with-reset,
+.resettable-settings-group,
+.footer,
+.button-row,
+.preset-row {
+    flex-direction: row;
+}
+
+.preview-options,
+.preview-controls-line,
+.button-row {
+    flex-wrap: wrap;
+}
+
+.icon-generator,
+.toolbar-version,
+.selection-name,
+.selection-content,
+.group-fields,
+.preview-pane-title,
+.camera-heading,
+.save-settings-heading > .unity-foldout__toggle,
+#add-source-row,
+#source-search,
+.color-toggle-row > .settings-field,
+.setting-with-reset > .settings-field,
+.preview-resolution,
+.body,
+.preview-panel,
+#preview-pages,
+.preview-pane,
+.icon-preview,
+.selection-list .unity-tree-view__item-content,
+.selection-row,
+.button-row > Button,
+.generate-button {
+    flex-grow: 1;
+}
+
+.toolbar-version,
+.selection-name,
+.selection-content,
+.group-fields,
+.preview-pane-title,
+.camera-heading,
+.save-settings-heading > .unity-foldout__toggle,
+#add-source-row,
+#source-search,
+.color-toggle-row > .settings-field,
+.setting-with-reset > .settings-field,
+.preview-resolution,
+.body,
+.preview-panel,
+#preview-pages,
+.preview-pane,
+.icon-preview,
+.selection-list .unity-tree-view__item-content {
+    flex-shrink: 1;
+}
+
+.preview-options,
+.preview-actions,
+.preview-toggles,
+.preview-caption,
+#preview-controls-hint,
+#source-search-row,
+#use-item-camera,
+#framing-options,
+.settings-section,
+.settings-group,
+.selection-editor,
+.selection-list,
+.controls,
+.button-row,
+.preset-row,
+.preset-cell,
+.color-toggle-row,
+.setting-with-reset,
+.footer,
+.preview-resolution > .unity-base-field__label,
+.preview-fold-indicator,
+.preview-controls-line,
+.preview-controls-line > .unity-label,
+.section-heading-row,
+#source-list-resize,
+#source-filter,
+.selection-row-actions,
+.item-camera-indicator {
+    flex-shrink: 0;
+}
+
+.preview-resolution,
+.body,
+.preview-panel,
+#preview-pages,
+.preview-pane,
+.icon-preview,
+.selection-list .unity-tree-view__item-content {
+    flex-basis: 0;
+}
+
+.window-toolbar {
+    height: 32px;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.toolbar-version,
+.selection-name,
+.selection-content,
+.group-fields,
+.preview-pane-title,
+.camera-heading,
+.save-settings-heading > .unity-foldout__toggle,
+#add-source-row,
+#source-search,
+.color-toggle-row > .settings-field,
+.setting-with-reset > .settings-field {
+    min-width: 0;
+}
+
+.toolbar-version,
+.selection-name,
+.preview-pane-title,
+.camera-heading {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.toolbar-version {
+    -unity-text-align: middle-left;
+}
+
+.language-picker {
+    width: 140px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.icon-generator .unity-toggle__text,
+.icon-generator .selection-name {
+    margin-left: 2px;
+}
+
+.preview-options,
+.preview-actions,
+.preview-toggles,
+.preview-caption,
+.preview-controls-line,
+.section-heading-row,
+.save-settings-heading,
+#framing-options,
+#source-search-row,
+#source-sticky-root,
+.selection-row,
+.selection-row-actions,
+.color-toggle-row,
+.setting-with-reset,
+.resettable-settings-group,
+.footer {
+    align-items: center;
+}
+
+.preview-options {
+    justify-content: flex-end;
+}
+
+.preview-resolution {
+    min-width: 240px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.preview-toggles {
+    margin-left: 8px;
+}
+
+.reset-view-button {
+    margin-right: 0;
+}
+
+.preview-resolution > .unity-base-field__label {
+    min-width: 0;
+}
+
+.preview-resolution > .unity-base-field__input {
+    min-width: 104px;
+}
+
+.preview-pane-title {
+    min-height: 18px;
+}
+
+#preview-pages {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.preview-pane,
+.icon-preview {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.preview-pane > .icon-preview {
+    margin: 0;
+}
+
+.preview-fold-indicator {
+    display: none;
+    font-size: 10px;
+}
+
+.preview-inset {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgb(48, 48, 48);
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.7);
+}
+
+.preview-inset .preview-caption {
+    color: rgb(230, 230, 230);
+}
+
+.preview-inset .preview-fold-indicator {
+    display: flex;
+}
+
+.body,
+.preview-panel,
+#preview-pages,
+.preview-pane,
+.icon-preview {
+    min-height: 0;
+}
+
+.body,
+#preview-pages,
+.preview-pane {
+    min-width: 0;
+}
+
+.controls {
+    min-width: 320px;
+    min-height: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 12px;
+}
+
+.controls .unity-scroll-view__content-container {
+    min-width: 0;
+}
+
+.preview-panel {
+    min-width: 260px;
+    margin: 10px;
+}
+
+.icon-preview {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+#preview-controls-hint {
+    max-width: 100%;
+    opacity: 0.85;
+}
+
+.preview-controls-line {
+    align-content: flex-start;
+    justify-content: center;
+}
+
+.preview-controls-line > .unity-label {
+    white-space: nowrap;
+}
+
+.preview-control-action {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.preview-controls-separator {
+    position: absolute;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    -unity-text-align: middle-center;
+}
+
+.settings-section,
+.settings-group,
+.selection-editor {
+    min-width: 0;
+}
+
+.settings-section {
+    margin-top: 24px;
+}
+
+.settings-section.first-section {
+    margin-top: 14px;
+}
+
+.section-title {
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.section-heading-row {
+    margin-bottom: 4px;
+}
+
+.section-heading-row > .section-title {
+    margin-bottom: 0;
+}
+
+#outline-options > .settings-field > .unity-base-field__label {
+    padding-left: 16px;
+}
+
+.settings-group {
+    margin-top: 10px;
+}
+
+.settings-group.first-group {
+    margin-top: 0;
+}
+
+.selection-list {
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+
+.selection-list.empty-list {
+    display: none;
+}
+
+#source-list-resize {
+    height: 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: resize-vertical;
+}
+
+#source-list-resize > VisualElement {
+    width: 32px;
+    height: 2px;
+    background-color: rgba(128, 128, 128, 0.65);
+}
+
+#source-sticky-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--unity-colors-default-background);
+}
+
+#source-sticky-root.unity-collection-view__item--selected {
+    background-color: var(--unity-colors-highlight-background);
+}
+
+#source-branch-guides {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.source-branch-vertical {
+    position: absolute;
+    top: 0;
+    border-left-width: 1px;
+    border-left-color: rgba(128, 128, 128, 0.65);
+}
+
+.source-branch-horizontal {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    border-top-width: 1px;
+    border-top-color: rgba(128, 128, 128, 0.65);
+}
+
+#source-search-empty {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+#source-filter {
+    min-width: 64px;
+    max-width: 120px;
+}
+
+.selection-list .unity-tree-view__item-content {
+    min-width: 0;
+}
+
+.selection-row {
+    min-width: 0;
+}
+
+.selection-row-actions {
+    width: 28px;
+    justify-content: flex-end;
+}
+
+.selection-list.root-blend-shape-controls .selection-row-actions {
+    width: 48px;
+}
+
+.item-camera-indicator {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.selection-name.excluded-object {
+    opacity: 0.5;
+}
+
+#blend-shape-weight-mode > .unity-base-field__label {
+    min-width: 0;
+    max-width: none;
+    white-space: nowrap;
+}
+
+.preset-cell {
+    width: 25%;
+}
+
+.preset-cell > Button.selected {
+    background-color: var(--unity-colors-button-background-pressed);
+    border-color: var(--unity-colors-highlight-background);
+}
+
+.settings-field > .unity-base-field__label {
+    min-width: 100px;
+    max-width: 125px;
+    white-space: normal;
+}
+
+.color-toggle-row {
+    min-width: 0;
+}
+
+.color-toggle-row > .settings-field > .unity-base-field__input {
+    min-width: 40px;
+}
+
+.footer {
+    padding: 0 8px 8px 8px;
+}
+
+.generate-button {
+    height: 40px;
+    -unity-font-style: bold;
+}
