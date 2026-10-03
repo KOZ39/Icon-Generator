@@ -204,7 +204,8 @@ namespace KOZ39.IconGenerator
             _selectionCount.text = isFiltered
                 ? Localization.Text(
                     "labels.FilteredSelectionCount",
-                    selectedCount,
+                    visibleSelectedCount,
+                    _visibleIndices.Count,
                     selectedCount - visibleSelectedCount
                 )
                 : Localization.Text("labels.SelectionCount", selectedCount, _items.Count);

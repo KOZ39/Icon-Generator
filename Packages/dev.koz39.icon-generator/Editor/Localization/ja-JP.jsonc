@@ -13,7 +13,7 @@
     "PreviewResolution": "プレビュー解像度",
     "PreviewAtIconResolution": "実寸表示",
     "Grid": "グリッド",
-    "CombinedPreviewName": "{0} · 合成",
+    "CombinedPreviewName": "{0} · 合成", // {0}: source names, comma-separated
     "PreviewControls": "中ボタンドラッグ：移動 · 右ボタンドラッグ：回転 · ホイールスクロール：ズーム\nダブルクリック：位置・ズームをリセット · Shift + ドラッグ：微調整",
     "BlendShapeWeightMode": "BlendShapeを無視",
     "UseItemCamera": "個別設定",
@@ -38,8 +38,8 @@
     "FileConflictHandling": "同名ファイルの処理",
     "SaveFolder": "保存先",
     "SaveSettings": "保存設定",
-    "SelectionCount": "{1}件中{0}件を選択",
-    "FilteredSelectionCount": "{0}件選択（うち非表示{1}件）",
+    "SelectionCount": "{0}/{1}件選択", // {0}: number of selected items, {1}: total number of items
+    "FilteredSelectionCount": "{0}/{1}件選択（検索結果外{2}件）", // {0}: number of selected items in search results, {1}: number of items in search results, {2}: number of selected items outside search results
     "MenuIconLink": "MAメニューアイコン"
   },
   "buttons": {
@@ -58,8 +58,8 @@
     "GenerateIcon": "アイコンを生成",
     "SelectAll": "すべて選択",
     "DeselectAll": "選択をすべて解除",
-    "SelectMatches": "検索結果を選択",
-    "DeselectMatches": "検索結果の選択を解除",
+    "SelectMatches": "検索結果をすべて選択",
+    "DeselectMatches": "検索結果の選択をすべて解除",
     "Confirm": "確認",
     "Cancel": "キャンセル"
   },
@@ -85,11 +85,11 @@
     "MenuIconLinkDisabled": "設定しない",
     "MenuIconLinkAsk": "確認して設定",
     "MenuIconLinkEmptyOnly": "未設定のみ自動設定",
-    "MenuIconRelationDirect": "{0}のメニュー · {1}",
-    "MenuIconRelationToggle": "{0}を表示 · {1}",
-    "MenuIconRelationShapeDeletion": "{0}の部位を削除 · {1}",
-    "MenuIconRelationCommonParent": "{0}以下を表示 · {1}",
-    "MenuIconRelationHide": "{0}を非表示 · {1}"
+    "MenuIconRelationDirect": "{0}のメニュー · {1}", // {0}: target object name, {1}: icon file name
+    "MenuIconRelationToggle": "{0}を表示 · {1}", // {0}: target object name, {1}: icon file name
+    "MenuIconRelationShapeDeletion": "{0}の部位を削除 · {1}", // {0}: target object name, {1}: icon file name
+    "MenuIconRelationCommonParent": "{0}以下を表示 · {1}", // {0}: target object name, {1}: icon file name
+    "MenuIconRelationHide": "{0}を非表示 · {1}" // {0}: target object name, {1}: icon file name
   },
   "tooltips": {
     "PreviewResolution": "プレビューの鮮明さを調整します。\n保存するアイコンの解像度には影響しません。",
@@ -98,8 +98,8 @@
     "PreviewSourceRoot": "名前をクリックすると合成プレビューを表示します。\nCtrl/Shift + クリック：複数選択\nSpace：チェックを切り替え\n右クリック：項目メニュー",
     "PreviewSource": "名前をクリックすると、チェックを外した項目や非アクティブな項目もプレビューできます。\nCtrl/Shift + クリック：複数選択\nSpace：チェックを切り替え\n右クリック：項目メニュー",
     "NoIndividualPreview": "個別に撮影できるメッシュがありません。\nMAコンポーネントの適用結果は合成プレビューで確認できます。",
-    "CaptureMeshPart": "この項目では、{0}からMA Shape ChangerのDeleteで指定された部分を抽出して撮影します。\n個別撮影と、保存対象が「選択した項目」の合成に適用します。",
-    "CaptureMaterialChange": "この項目では、メニューをオンにした状態でMA Material Setter/Swapを適用した{0}を撮影します。\n個別撮影と、保存対象が「選択した項目」の合成に適用します。",
+    "CaptureMeshPart": "この項目では、{0}からMA Shape ChangerのDeleteで指定された部分を抽出して撮影します。\n個別撮影と、保存対象が「選択した項目」の合成に適用します。", // {0}: renderer names, comma-separated
+    "CaptureMaterialChange": "この項目では、メニューをオンにした状態でMA Material Setter/Swapを適用した{0}を撮影します。\n個別撮影と、保存対象が「選択した項目」の合成に適用します。", // {0}: renderer names, comma-separated
     "AddSource": "シーンオブジェクトやプレハブを追加します。複数まとめてドラッグ＆ドロップできます。\n追加したソースは、シーン内で非アクティブでも初期状態ではチェックされます。",
     "SearchSources": "ソースと子項目を名前で検索します。\n保存対象が「選択した項目」の場合、検索結果に表示されている選択項目だけを撮影します。",
     "SourceFilter": "メッシュ：メッシュを持つ項目\nMAコンポーネント：自身にも子オブジェクトにもメッシュがないMA制御項目\n未チェック：自身または親のチェックが外れている項目\n個別カメラ：個別カメラが有効な項目\n\n保存対象が「選択した項目」の場合、検索やフィルターで除外された項目は撮影しません。",
@@ -126,9 +126,9 @@
     "IconResolution": "保存するアイコンの幅と高さです。",
     "GenerationMode": "両方：合成と個別のアイコンを保存\n合成：保存対象の項目を1枚にまとめて保存\n個別：グループ・メッシュ・抽出部分ごとに保存\n\n撮影範囲・構図・MAコンポーネントの適用状態が同じ場合は、1回だけ保存します。",
     "SaveScope": "すべての項目：個別撮影はチェックを外した項目や非アクティブな項目も含み、合成はチェック状態に従う\nチェックした項目：チェック状態に従って撮影\n選択した項目：一覧で選択した項目と子項目を、チェック・アクティブ状態に関係なく撮影\n\n合成プレビューにも適用します。\nEditorOnlyの項目とその子項目は除外します。",
-    "UnknownFileNameToken": "不明なプレースホルダー：{0}",
-    "FileNameTokenSuggestion": "候補：{0}",
-    "FileNameExample": "ファイル名のプレビュー：{0}\n同名ファイルを保存するときは、番号が付く場合があります。",
+    "UnknownFileNameToken": "不明なプレースホルダー：{0}", // {0}: token as typed, e.g. {nmae}
+    "FileNameTokenSuggestion": "候補：{0}", // {0}: closest valid token, e.g. {name}
+    "FileNameExample": "ファイル名のプレビュー：{0}\n同名ファイルを保存するときは、番号が付く場合があります。", // {0}: file name with extension, e.g. Eku_front.png
     "BackgroundColor": "「透明」が無効な場合、この色で背景を塗りつぶします。",
     "TransparentBackground": "背景色の代わりに透明な背景を使用します。",
     "OutlineColor": "オブジェクトの外周に付ける輪郭線の色です。",
@@ -143,10 +143,10 @@
   "messages": {
     "NoSearchResults": "該当する項目がありません",
     "ExistingFileSkipped": "既存のファイルを残し、このアイコンの保存をスキップしました。",
-    "GenerationSummary": "保存 {0}件 · 失敗 {1}件 · スキップ {2}件",
+    "GenerationSummary": "保存 {0}件 · 失敗 {1}件 · スキップ {2}件", // {0}: number saved, {1}: number failed, {2}: number skipped
     "GenerationSucceeded": "保存済み",
     "GenerationSkipped": "スキップ",
-    "GenerationCancelled": "キャンセル — {0}",
+    "GenerationCancelled": "キャンセル — {0}", // {0}: GenerationSummary text
     "GenerationFailed": "生成失敗",
     "GenerationWarnings": "警告",
     "DuplicateCapture": "同じ撮影内容を別の項目として保存済みです。",
@@ -156,17 +156,17 @@
     "NoRenderers": "撮影できるメッシュがありません。\n保存対象にメッシュが含まれ、レンダラーが有効になっているか確認してください。",
     "EmptyCapture": "撮影した画像に何も写っていません。\nカメラの位置・ズームと、ソースの選択・チェック状態を確認してください。",
     "InvalidBounds": "ソースのバウンズまたはトランスフォームに無効な値があります。",
-    "UnavailableSourceReferences": "参照先のシーンを開くか、次の項目をリストから削除してください。\n{0}",
+    "UnavailableSourceReferences": "参照先のシーンを開くか、次の項目をリストから削除してください。\n{0}", // {0}: source names, one per line
     "EditModeOnly": "再生モードを終了してからアイコンを生成してください。",
-    "CaptureLayerConflict": "他のシーンオブジェクトが撮影用レイヤー21を使用しています。\n{0}",
+    "CaptureLayerConflict": "他のシーンオブジェクトが撮影用レイヤー21を使用しています。\n{0}", // {0}: object paths, one per line (up to 12)
     "UnsupportedRenderPipeline": "Built-in Render Pipelineにのみ対応しています。",
     "InvalidSaveFolder": "有効な保存先フォルダーのパスを入力してください。",
-    "ModularAvatarEffectsSkipped": "MAのリアクティブコンポーネント（Shape Changer・Material Setter・Material Swap）を適用できなかったため、既定の状態で撮影しました。\nインストールされているModular Avatarのバージョンに対応していない可能性があります。\n{0}",
-    "UnsupportedRenderers": "未対応のレンダラーを撮影対象から除外しました。\n{0}",
+    "ModularAvatarEffectsSkipped": "MAのリアクティブコンポーネント（Shape Changer・Material Setter・Material Swap）を適用できなかったため、既定の状態で撮影しました。\nインストールされているModular Avatarのバージョンに対応していない可能性があります。\n{0}", // {0}: error message
+    "UnsupportedRenderers": "未対応のレンダラーを撮影対象から除外しました。\n{0}", // {0}: renderer names and types, comma-separated
     "LightCullingMaskMismatch": "一部のシーンライトのカリングマスクに撮影用レイヤー21が含まれていません。\nそのライトはアイコンに反映されません。",
-    "ConfirmOverwriteFiles": "同名のファイルが{0}件あります。\n上書きするファイルにチェックを入れてください。チェックを外したファイルはそのまま残します。",
-    "ConfirmLinkMenuIcons": "保存した項目を操作するMAメニューが{0}件あります。\nアイコンを設定するメニューにチェックを入れてください。独自のアイコンが設定済みのメニューや、項目を非表示にするメニューはチェックを外しています。",
-    "MenuIconsLinked": "{0}件のMAメニューにアイコンを設定しました。"
+    "ConfirmOverwriteFiles": "同名のファイルが{0}件あります。\n上書きするファイルにチェックを入れてください。チェックを外したファイルはそのまま残します。", // {0}: number of existing files
+    "ConfirmLinkMenuIcons": "保存した項目を操作するMAメニューが{0}件あります。\nアイコンを設定するメニューにチェックを入れてください。独自のアイコンが設定済みのメニューや、項目を非表示にするメニューはチェックを外しています。", // {0}: number of menus
+    "MenuIconsLinked": "{0}件のMAメニューにアイコンを設定しました。" // {0}: number of linked menus
   },
   "menus": {
     "CopyItemCamera": "カメラ設定をコピー",
