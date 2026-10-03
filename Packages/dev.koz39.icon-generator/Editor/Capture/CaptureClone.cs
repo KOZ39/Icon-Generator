@@ -27,6 +27,7 @@ namespace KOZ39.IconGenerator
         private readonly Dictionary<Transform, Transform> _transforms = new();
         private readonly HashSet<Transform> _sourceAncestors;
         private readonly List<Mesh> _meshes = new();
+        private readonly List<(Renderer Renderer, List<Vector3> Corners)> _meshCorners = new();
         private ResolvedCaptureSelection _selection;
         private readonly GameObject _captureTarget;
         private readonly bool _includeInactiveObjects;
@@ -58,8 +59,6 @@ namespace KOZ39.IconGenerator
 
             return _visibleCorners;
         }
-
-        internal void InvalidateVisibleArea() => _visibleCorners = null;
 
         private CaptureClone(
             ResolvedCaptureSelection selection,
@@ -539,20 +538,37 @@ namespace KOZ39.IconGenerator
             Renderers.Add(renderer);
             OriginalRenderers.Add(original);
 
-            var start = WorldCorners.Count;
-            AddCorners(localBounds, target.transform.localToWorldMatrix, WorldCorners);
+            var corners = new List<Vector3>(8);
+            AddCorners(localBounds, target.transform.localToWorldMatrix, corners);
+            _meshCorners.Add((renderer, corners));
+            AddExpandedCorners(renderer, corners);
+        }
+
+        internal void RefreshBounds()
+        {
+            WorldCorners.Clear();
+
+            foreach (var (renderer, corners) in _meshCorners)
+            {
+                AddExpandedCorners(renderer, corners);
+            }
+
+            _visibleCorners = null;
+        }
+
+        private void AddExpandedCorners(Renderer renderer, List<Vector3> corners)
+        {
             var expansion = CalculateShaderExpansion(renderer);
 
-            if (expansion != Vector3.zero)
+            if (expansion == Vector3.zero)
             {
-                var corners = WorldCorners.GetRange(start, 8);
+                WorldCorners.AddRange(corners);
+                return;
+            }
 
-                WorldCorners.RemoveRange(start, 8);
-
-                foreach (var corner in corners)
-                {
-                    AddCorners(new Bounds(corner, expansion * 2), Matrix4x4.identity, WorldCorners);
-                }
+            foreach (var corner in corners)
+            {
+                AddCorners(new Bounds(corner, expansion * 2), Matrix4x4.identity, WorldCorners);
             }
         }
 

@@ -139,8 +139,8 @@ namespace KOZ39.IconGenerator
 
         private void RequestPreviewRender()
         {
-            _selectedPreview?.InvalidateVisibleArea();
-            _combinedPreview?.InvalidateVisibleArea();
+            _selectedPreview?.RefreshBounds();
+            _combinedPreview?.RefreshBounds();
             _previewRenderPending = true;
         }
 

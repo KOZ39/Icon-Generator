@@ -114,7 +114,7 @@ namespace KOZ39.IconGenerator
             }
         }
 
-        internal void InvalidateVisibleArea() => _clone?.InvalidateVisibleArea();
+        internal void RefreshBounds() => _clone?.RefreshBounds();
 
         internal Vector2 ConstrainOffset(IconGeneratorSettings settings)
         {
