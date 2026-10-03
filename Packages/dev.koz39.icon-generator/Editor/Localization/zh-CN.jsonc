@@ -82,6 +82,7 @@
     "FileConflictOverwrite": "始终覆盖",
     "FileConflictConfirmOverwrite": "确认覆盖",
     "FileConflictAddNumber": "添加编号",
+    "FileConflictSkip": "不覆盖",
     "MenuIconLinkDisabled": "不关联",
     "MenuIconLinkAsk": "确认后关联",
     "MenuIconLinkEmptyOnly": "仅自动关联空图标",

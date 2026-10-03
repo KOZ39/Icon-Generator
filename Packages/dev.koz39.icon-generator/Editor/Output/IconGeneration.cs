@@ -277,6 +277,25 @@ namespace KOZ39.IconGenerator
                         continue;
                     }
 
+                    var name = FileNameFor(target, pose.rotation);
+                    var path = IconFileOutput.ChoosePath(
+                        folder,
+                        name,
+                        settings.existingFileAction,
+                        reservedPaths
+                    );
+
+                    if (settings.existingFileAction == ExistingFileAction.Skip && File.Exists(path))
+                    {
+                        reservedPaths.Add(path);
+                        savedCaptures.Add(signature, path);
+                        icons.Add((index, target, path));
+                        skippedTargets.Add(
+                            (index, new IconGenerationSkip(target, "ExistingFileSkipped"))
+                        );
+                        continue;
+                    }
+
                     texture = IconCapture.Render(
                         clone,
                         settings,
@@ -285,14 +304,6 @@ namespace KOZ39.IconGenerator
                         pose: pose,
                         validateEnvironment: false,
                         reportWarning: CollectWarning
-                    );
-
-                    var name = FileNameFor(target, pose.rotation);
-                    var path = IconFileOutput.ChoosePath(
-                        folder,
-                        name,
-                        settings.existingFileAction,
-                        reservedPaths
                     );
 
                     if (settings.existingFileAction == ExistingFileAction.Ask && File.Exists(path))

@@ -82,6 +82,7 @@
     "FileConflictOverwrite": "常に上書き",
     "FileConflictConfirmOverwrite": "上書きを確認",
     "FileConflictAddNumber": "連番を追加",
+    "FileConflictSkip": "上書きしない",
     "MenuIconLinkDisabled": "設定しない",
     "MenuIconLinkAsk": "確認して設定",
     "MenuIconLinkEmptyOnly": "未設定のみ自動設定",

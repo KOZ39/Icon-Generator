@@ -1027,6 +1027,7 @@ namespace KOZ39.IconGenerator
                         ExistingFileAction.Overwrite => "options.FileConflictOverwrite",
                         ExistingFileAction.Ask => "options.FileConflictConfirmOverwrite",
                         ExistingFileAction.AddNumber => "options.FileConflictAddNumber",
+                        ExistingFileAction.Skip => "options.FileConflictSkip",
                         _ => throw new ArgumentOutOfRangeException(nameof(action), action, null),
                     }
                 );

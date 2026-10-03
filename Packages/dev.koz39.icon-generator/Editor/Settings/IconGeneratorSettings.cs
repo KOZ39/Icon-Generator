@@ -11,6 +11,7 @@ namespace KOZ39.IconGenerator
         Overwrite,
         Ask,
         AddNumber,
+        Skip,
     }
 
     internal enum IconGenerationMode

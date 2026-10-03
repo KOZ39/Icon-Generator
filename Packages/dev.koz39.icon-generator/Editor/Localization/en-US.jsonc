@@ -82,6 +82,7 @@
     "FileConflictOverwrite": "Always Overwrite",
     "FileConflictConfirmOverwrite": "Confirm Overwrite",
     "FileConflictAddNumber": "Add a Number",
+    "FileConflictSkip": "Never Overwrite",
     "MenuIconLinkDisabled": "Don't Link",
     "MenuIconLinkAsk": "Confirm Before Linking",
     "MenuIconLinkEmptyOnly": "Auto-Link Menus Without Icons",

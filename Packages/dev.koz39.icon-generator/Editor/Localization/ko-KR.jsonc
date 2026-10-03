@@ -82,6 +82,7 @@
     "FileConflictOverwrite": "항상 덮어쓰기",
     "FileConflictConfirmOverwrite": "덮어쓰기 확인",
     "FileConflictAddNumber": "번호 추가",
+    "FileConflictSkip": "덮어쓰지 않기",
     "MenuIconLinkDisabled": "연결 안 함",
     "MenuIconLinkAsk": "확인 후 연결",
     "MenuIconLinkEmptyOnly": "빈 아이콘만 자동 연결",
