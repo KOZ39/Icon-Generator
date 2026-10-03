@@ -71,32 +71,6 @@ namespace KOZ39.IconGenerator
         }
 
         internal static Texture2D Render(
-            ResolvedCaptureSelection selection,
-            IconGeneratorSettings settings,
-            int resolution,
-            Action<CaptureValidationException> reportWarning = null,
-            GameObject captureTarget = null
-        )
-        {
-            CaptureEnvironment.Validate();
-            using var clone = CaptureClone.Build(
-                selection,
-                captureTarget,
-                settings.blendShapeWeightMode,
-                settings.ShouldIncludeInactiveObjects(captureTarget != null)
-            );
-
-            return Render(
-                clone,
-                settings,
-                resolution,
-                reportWarning,
-                pose: settings.CameraFor(captureTarget),
-                validateEnvironment: false
-            );
-        }
-
-        internal static Texture2D Render(
             CaptureClone clone,
             IconGeneratorSettings settings,
             int resolution,

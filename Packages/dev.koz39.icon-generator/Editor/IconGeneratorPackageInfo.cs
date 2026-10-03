@@ -1,7 +1,4 @@
-using System.Runtime.CompilerServices;
 using UnityEditor.PackageManager;
-
-[assembly: InternalsVisibleTo("dev.koz39.icon-generator.Editor.Tests")]
 
 namespace KOZ39.IconGenerator
 {

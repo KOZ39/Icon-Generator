@@ -2,8 +2,17 @@
     "name": "dev.koz39.icon-generator.Editor",
     "rootNamespace": "KOZ39.IconGenerator",
     "references": [],
-    "includePlatforms": ["Editor"],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": ["Newtonsoft.Json.dll"],
-    "autoReferenced": false
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
