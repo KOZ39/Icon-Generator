@@ -11,7 +11,7 @@
 
 ## 설치
 
-[VPM 저장소](https://koz39.github.io/vpm-listing/)에서 "Add to VCC"를 누른 뒤, VCC 또는 ALCOM에서 Icon Generator를 추가합니다.
+[VPM 저장소](https://koz39.github.io/vpm-listing/)에서 "Add to VCC"로 저장소를 추가한 뒤, VCC 또는 ALCOM의 프로젝트 관리에서 Icon Generator 패키지를 추가합니다.
 
 ## 사용법
 
