@@ -18,7 +18,7 @@ Click "Add to VCC" on the [VPM listing](https://koz39.github.io/vpm-listing/) to
 1. Open Tools > Icon Generator from the top menu.
 2. Drag and drop an avatar or accessory into Sources.
 3. Adjust the camera and icon settings while checking the preview.
-4. Click Generate Icon.
+4. Click "Generate Icon".
 
 ## Features
 
