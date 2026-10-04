@@ -6,7 +6,7 @@ English | [한국어](README_KO.md) | [日本語](README_JA.md)
 
 ## Requirements
 
-- Unity 2022.3
+- Unity 2022.3.22f1
 - Modular Avatar (optional)
 
 ## Installation

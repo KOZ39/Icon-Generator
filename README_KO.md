@@ -6,7 +6,7 @@
 
 ## 요구 사항
 
-- Unity 2022.3
+- Unity 2022.3.22f1
 - Modular Avatar (선택)
 
 ## 설치

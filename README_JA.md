@@ -6,7 +6,7 @@
 
 ## 動作環境
 
-- Unity 2022.3
+- Unity 2022.3.22f1
 - Modular Avatar（任意）
 
 ## インストール
