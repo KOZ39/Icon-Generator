@@ -389,6 +389,13 @@ namespace KOZ39.IconGenerator
                     }
                     catch (Exception exception)
                     {
+                        icons.RemoveAll(item =>
+                            string.Equals(
+                                item.Path,
+                                pending.Path,
+                                StringComparison.OrdinalIgnoreCase
+                            )
+                        );
                         failures.Add(
                             (pending.Index, new IconGenerationFailure(pending.Target, exception))
                         );
