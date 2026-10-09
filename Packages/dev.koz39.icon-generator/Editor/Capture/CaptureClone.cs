@@ -240,12 +240,7 @@ namespace KOZ39.IconGenerator
             {
                 foreach (var original in transform.GetComponents<Renderer>())
                 {
-                    if (
-                        lowerLodRenderers.Contains(original)
-                        || !original.enabled
-                        || original.forceRenderingOff
-                        || !IsActiveInCapture(original.transform)
-                    )
+                    if (lowerLodRenderers.Contains(original) || !IsRendered(original))
                     {
                         continue;
                     }
@@ -306,7 +301,7 @@ namespace KOZ39.IconGenerator
             }
         }
 
-        private static HashSet<Renderer> FindLowerLodRenderers(HashSet<Transform> included)
+        private HashSet<Renderer> FindLowerLodRenderers(HashSet<Transform> included)
         {
             var groups = new HashSet<LODGroup>();
 
@@ -322,16 +317,31 @@ namespace KOZ39.IconGenerator
 
             foreach (var group in groups)
             {
-                var levels = group.GetLODs();
-
-                if (levels.Length == 0)
+                if (!group.enabled || !IsActiveInCapture(group.transform))
                 {
                     continue;
                 }
 
-                var highestDetailRenderers = new HashSet<Renderer>(levels[0].renderers);
+                var levels = group.GetLODs();
+                var highestDetailRenderers = levels
+                    .Select(level =>
+                        level
+                            .renderers.Where(renderer =>
+                                renderer != null
+                                && included.Contains(renderer.transform)
+                                && IsRendered(renderer)
+                                && CaptureHierarchy.HasMesh(renderer)
+                            )
+                            .ToHashSet()
+                    )
+                    .FirstOrDefault(renderers => renderers.Count > 0);
 
-                foreach (var renderer in levels.Skip(1).SelectMany(level => level.renderers))
+                if (highestDetailRenderers == null)
+                {
+                    continue;
+                }
+
+                foreach (var renderer in levels.SelectMany(level => level.renderers))
                 {
                     if (renderer != null && !highestDetailRenderers.Contains(renderer))
                     {
@@ -342,6 +352,11 @@ namespace KOZ39.IconGenerator
 
             return rejected;
         }
+
+        private bool IsRendered(Renderer renderer) =>
+            renderer.enabled
+            && !renderer.forceRenderingOff
+            && IsActiveInCapture(renderer.transform);
 
         private bool IsActiveInCapture(Transform item)
         {
@@ -511,6 +526,7 @@ namespace KOZ39.IconGenerator
 
                 try
                 {
+                    // useScale: true bakes into true local space; AddCorners applies the scale.
                     renderedSkin.BakeMesh(baked, true);
 
                     if (part == null)
