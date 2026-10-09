@@ -249,9 +249,6 @@ namespace KOZ39.IconGenerator
             SelectionChanged();
         }
 
-        internal void SetObjectIncluded(GameObject target, bool included) =>
-            SetObjectsIncluded(new[] { target }, included);
-
         internal void SetBranchIncluded(GameObject target, bool? included)
         {
             var branch = FindSourceNodes(new[] { target }).FirstOrDefault();

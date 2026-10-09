@@ -194,8 +194,6 @@ namespace KOZ39.IconGenerator
             Sources.Add(SelectionReference.For(item));
         }
 
-        internal ResolvedCaptureSelection Resolve() => Resolve(out _);
-
         internal ResolvedCaptureSelection Resolve(out CaptureSelectionTree tree)
         {
             if (HasOnlyUnavailableSources)

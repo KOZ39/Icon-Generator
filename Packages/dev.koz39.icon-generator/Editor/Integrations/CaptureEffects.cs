@@ -23,9 +23,6 @@ namespace KOZ39.IconGenerator
             (ICaptureEffects Effects, CaptureValidationException Warning)
         > _entries = new();
 
-        internal ICaptureEffects Get(ResolvedCaptureSelection selection) =>
-            Get(selection, Array.Empty<Component>(), out _);
-
         internal ICaptureEffects Get(
             ResolvedCaptureSelection selection,
             IReadOnlyCollection<Component> forcedMenuItems,
