@@ -242,6 +242,7 @@ namespace KOZ39.IconGenerator
                     DestroyPreview();
                     _previewRebuildPending = false;
                     _sourceHierarchyHash = CalculateSourceHierarchyHash();
+                    _sceneLighting = FindSceneLighting();
                     _rebuildAssets = null;
                 }
 

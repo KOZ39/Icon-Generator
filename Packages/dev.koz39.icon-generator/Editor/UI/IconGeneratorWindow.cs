@@ -45,6 +45,7 @@ namespace KOZ39.IconGenerator
         private double _nextSettingsSaveTime;
         private double _nextStatePollTime;
         private int _sourceHierarchyHash;
+        private Behaviour[] _sceneLighting;
         private string _settingsUndoState;
         private readonly List<Transform> _sourceTransforms = new();
         private HashSet<Object> _rebuildAssets;
@@ -272,9 +273,16 @@ namespace KOZ39.IconGenerator
                 return scopeRoots.Contains(transform.root);
             }
 
-            static bool AffectsLighting(GameObject gameObject) =>
-                gameObject.TryGetComponent<Light>(out _)
-                || gameObject.TryGetComponent<ReflectionProbe>(out _);
+            bool LightingRemoved() =>
+                _sceneLighting != null && _sceneLighting.Any(item => item == null);
+
+            bool AffectsLighting(Transform transform) =>
+                transform.TryGetComponent<Light>(out _)
+                || transform.TryGetComponent<ReflectionProbe>(out _)
+                || _sceneLighting != null
+                    && _sceneLighting.Any(item =>
+                        item == null || item.transform.IsChildOf(transform)
+                    );
 
             for (var i = 0; i < stream.length; i++)
             {
@@ -309,6 +317,54 @@ namespace KOZ39.IconGenerator
                     )
                     {
                         RequestPreviewRender();
+                    }
+
+                    continue;
+                }
+
+                if (stream.GetEventType(i) == ObjectChangeKind.UpdatePrefabInstances)
+                {
+                    stream.GetUpdatePrefabInstancesEvent(i, out var prefabChange);
+
+                    foreach (var id in prefabChange.instanceIds)
+                    {
+                        if (
+                            EditorUtility.InstanceIDToObject(id) is GameObject instance
+                            && IsInCaptureScope(instance.transform)
+                        )
+                        {
+                            RequestPreviewRebuild();
+                            break;
+                        }
+                    }
+
+                    continue;
+                }
+
+                if (stream.GetEventType(i) == ObjectChangeKind.CreateGameObjectHierarchy)
+                {
+                    stream.GetCreateGameObjectHierarchyEvent(i, out var created);
+
+                    if (
+                        EditorUtility.InstanceIDToObject(created.instanceId)
+                            is GameObject createdObject
+                        && (
+                            createdObject.GetComponentInChildren<Light>(true) != null
+                            || createdObject.GetComponentInChildren<ReflectionProbe>(true) != null
+                        )
+                    )
+                    {
+                        RequestPreviewRebuild();
+                    }
+
+                    continue;
+                }
+
+                if (stream.GetEventType(i) == ObjectChangeKind.DestroyGameObjectHierarchy)
+                {
+                    if (LightingRemoved())
+                    {
+                        RequestPreviewRebuild();
                     }
 
                     continue;
@@ -351,7 +407,7 @@ namespace KOZ39.IconGenerator
                             _previewRenderPending =
                                 true;
                     }
-                    else if (AffectsLighting(component.gameObject))
+                    else if (AffectsLighting(component.transform))
                     {
                         RequestPreviewRebuild();
                     }
@@ -360,7 +416,10 @@ namespace KOZ39.IconGenerator
                 if (
                     target is GameObject gameObject
                     && gameObject.hideFlags == HideFlags.None
-                    && (IsInCaptureScope(gameObject.transform) || AffectsLighting(gameObject))
+                    && (
+                        IsInCaptureScope(gameObject.transform)
+                        || AffectsLighting(gameObject.transform)
+                    )
                 )
                 {
                     RequestPreviewRebuild();
@@ -549,6 +608,19 @@ namespace KOZ39.IconGenerator
                 return hash;
             }
         }
+
+        private static Behaviour[] FindSceneLighting() =>
+            Object
+                .FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                .Cast<Behaviour>()
+                .Concat(
+                    Object.FindObjectsByType<ReflectionProbe>(
+                        FindObjectsInactive.Include,
+                        FindObjectsSortMode.None
+                    )
+                )
+                .Where(item => !EditorSceneManager.IsPreviewScene(item.gameObject.scene))
+                .ToArray();
 
         private void ShowError(Exception exception)
         {
