@@ -2,7 +2,7 @@
   "name": "dev.koz39.icon-generator",
   "displayName": "Icon Generator",
   "description": "A Unity editor tool for creating icons of VRChat avatars and accessories.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "unity": "2022.3",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2"
