@@ -99,10 +99,8 @@ namespace KOZ39.IconGenerator
             CandidatePaths(directory, name)
                 .First(path =>
                     reservedPaths?.Contains(path) != true
-                    && (
-                        action != ExistingFileAction.AddNumber
-                        || (!File.Exists(path) && !Directory.Exists(path))
-                    )
+                    && !Directory.Exists(path)
+                    && (action != ExistingFileAction.AddNumber || !File.Exists(path))
                 );
 
         private static IEnumerable<string> CandidatePaths(string directory, string name)
