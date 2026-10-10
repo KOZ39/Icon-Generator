@@ -123,7 +123,7 @@ namespace KOZ39.IconGenerator
                     _settings,
                     (target, index, count) =>
                     {
-                        showProgress = !Application.isBatchMode && count > 1;
+                        showProgress = count > 1;
 
                         return showProgress && ReportProgressAndCheckCancel(target, index, count);
                     },
@@ -214,8 +214,7 @@ namespace KOZ39.IconGenerator
                         ? candidates
                             .Where(candidate => candidate.Selected && candidate.CurrentIcon == null)
                             .ToArray()
-                    : Application.isBatchMode ? null
-                    : MenuIconLinkDialog.Confirm(candidates, _localization);
+                        : MenuIconLinkDialog.Confirm(candidates, _localization);
 
                 if (selected == null || selected.Count == 0)
                 {
