@@ -53,6 +53,7 @@ namespace KOZ39.IconGenerator
         internal readonly IReadOnlyList<IconGenerationFailure> Failures;
         internal readonly IReadOnlyList<string> SavedPaths;
         internal readonly IReadOnlyList<IconGenerationSkip> SkippedTargets;
+        internal readonly int RevertedCount;
         internal readonly IReadOnlyList<CaptureValidationException> Warnings;
         internal readonly IReadOnlyList<(GameObject Target, string Path)> Icons;
 
@@ -61,6 +62,7 @@ namespace KOZ39.IconGenerator
             IReadOnlyList<IconGenerationFailure> failures,
             IReadOnlyList<string> savedPaths,
             IReadOnlyList<IconGenerationSkip> skippedTargets,
+            int revertedCount,
             IReadOnlyList<CaptureValidationException> warnings = null,
             IReadOnlyList<(GameObject Target, string Path)> icons = null
         )
@@ -71,6 +73,7 @@ namespace KOZ39.IconGenerator
             Failures = failures;
             SavedPaths = savedPaths;
             SkippedTargets = skippedTargets;
+            RevertedCount = revertedCount;
         }
     }
 
@@ -191,6 +194,9 @@ namespace KOZ39.IconGenerator
             var icons = new List<(int Index, GameObject Target, string Path)>();
             var warnings = new List<CaptureValidationException>();
             var warningIdentities = new HashSet<(string Key, string Arguments)>();
+            var originals = new Dictionary<string, (byte[] Png, byte[] Meta)>(
+                StringComparer.OrdinalIgnoreCase
+            );
 
             IconGenerationResult Result(bool cancelled) =>
                 new(
@@ -198,12 +204,25 @@ namespace KOZ39.IconGenerator
                     failures.OrderBy(item => item.Index).Select(item => item.Failure).ToArray(),
                     savedPaths.OrderBy(item => item.Index).Select(item => item.Path).ToArray(),
                     skippedTargets.OrderBy(item => item.Index).Select(item => item.Skip).ToArray(),
+                    cancelled ? originals.Count : 0,
                     warnings,
                     icons
                         .OrderBy(item => item.Index)
                         .Select(item => (item.Target, item.Path))
                         .ToArray()
                 );
+
+            IconGenerationResult Cancel()
+            {
+                foreach (var original in originals)
+                {
+                    IconFileOutput.Revert(original.Key, original.Value);
+                }
+
+                savedPaths.Clear();
+
+                return Result(true);
+            }
 
             void CollectWarning(CaptureValidationException warning)
             {
@@ -219,7 +238,7 @@ namespace KOZ39.IconGenerator
 
                 if (shouldCancel?.Invoke(target, index, targets.Count) == true)
                 {
-                    return Result(true);
+                    return Cancel();
                 }
 
                 Texture2D texture = null;
@@ -312,6 +331,7 @@ namespace KOZ39.IconGenerator
                         continue;
                     }
 
+                    originals[path] = IconFileOutput.ReadOriginal(path);
                     IconFileOutput.Save(texture, path);
                     reservedPaths.Add(path);
                     savedPaths.Add((index, path));
@@ -355,7 +375,7 @@ namespace KOZ39.IconGenerator
 
                 if (selected == null)
                 {
-                    return Result(true);
+                    return Cancel();
                 }
 
                 var approvedOverwrites = new HashSet<string>(

@@ -147,7 +147,7 @@
     "GenerationSummary": "{0} Saved · {1} Failed · {2} Skipped", // {0}: number saved, {1}: number failed, {2}: number skipped
     "GenerationSucceeded": "Saved",
     "GenerationSkipped": "Skipped",
-    "GenerationCancelled": "Cancelled — {0}", // {0}: GenerationSummary text
+    "GenerationCancelled": "Cancelled — {0} Reverted", // {0}: number reverted
     "GenerationFailed": "Generation Failed",
     "GenerationWarnings": "Warnings",
     "DuplicateCapture": "An identical capture was already saved for another item.",

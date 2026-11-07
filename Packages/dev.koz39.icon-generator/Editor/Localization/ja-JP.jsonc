@@ -147,7 +147,7 @@
     "GenerationSummary": "保存 {0}件 · 失敗 {1}件 · スキップ {2}件", // {0}: number saved, {1}: number failed, {2}: number skipped
     "GenerationSucceeded": "保存済み",
     "GenerationSkipped": "スキップ",
-    "GenerationCancelled": "キャンセル — {0}", // {0}: GenerationSummary text
+    "GenerationCancelled": "キャンセル — 復元 {0}件", // {0}: number reverted
     "GenerationFailed": "生成失敗",
     "GenerationWarnings": "警告",
     "DuplicateCapture": "同じ撮影内容を別の項目として保存済みです。",

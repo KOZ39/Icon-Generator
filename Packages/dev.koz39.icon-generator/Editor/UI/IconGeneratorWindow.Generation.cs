@@ -13,17 +13,14 @@ namespace KOZ39.IconGenerator
 
         private void LogGenerationResult(IconGenerationResult result)
         {
-            var summary = _localization.Text(
-                "messages.GenerationSummary",
-                result.SavedPaths.Count,
-                result.Failures.Count,
-                result.SkippedTargets.Count
-            );
-
-            if (result.Cancelled)
-            {
-                summary = _localization.Text("messages.GenerationCancelled", summary);
-            }
+            var summary = result.Cancelled
+                ? _localization.Text("messages.GenerationCancelled", result.RevertedCount)
+                : _localization.Text(
+                    "messages.GenerationSummary",
+                    result.SavedPaths.Count,
+                    result.Failures.Count,
+                    result.SkippedTargets.Count
+                );
 
             var sections = new List<string> { $"{IconGeneratorPackageInfo.LogPrefix} {summary}" };
             AddSection("GenerationSucceeded", result.SavedPaths);
@@ -143,22 +140,18 @@ namespace KOZ39.IconGenerator
                 LogGenerationResult(result);
                 ShowCaptureWarnings();
 
-                if (!result.Cancelled)
-                {
-                    if (showProgress)
-                    {
-                        EditorUtility.ClearProgressBar();
-                        showProgress = false;
-                    }
-
-                    LinkMenuIcons(resolved.Sources, tree, result.Icons);
-                }
-
-                if (result.Cancelled && result.Failures.Count == 0)
+                if (result.Cancelled)
                 {
                     return;
                 }
 
+                if (showProgress)
+                {
+                    EditorUtility.ClearProgressBar();
+                    showProgress = false;
+                }
+
+                LinkMenuIcons(resolved.Sources, tree, result.Icons);
                 SaveSettings();
                 _view.RefreshSettings();
                 _view.RefreshOutputFolder();

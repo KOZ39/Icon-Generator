@@ -193,6 +193,49 @@ namespace KOZ39.IconGenerator
             }
         }
 
+        internal static (byte[] Png, byte[] Meta) ReadOriginal(string path)
+        {
+            var metaPath = $"{path}.meta";
+
+            return File.Exists(path)
+                ? (
+                    File.ReadAllBytes(path),
+                    File.Exists(metaPath) ? File.ReadAllBytes(metaPath) : null
+                )
+                : default;
+        }
+
+        internal static void Revert(string path, (byte[] Png, byte[] Meta) original)
+        {
+            var inAssets = TryGetAssetPath(path, out var assetPath);
+
+            if (original.Png == null)
+            {
+                if (inAssets)
+                {
+                    AssetDatabase.DeleteAsset(assetPath);
+                }
+                else
+                {
+                    File.Delete(path);
+                }
+
+                return;
+            }
+
+            File.WriteAllBytes(path, original.Png);
+
+            if (original.Meta != null)
+            {
+                File.WriteAllBytes($"{path}.meta", original.Meta);
+            }
+
+            if (inAssets)
+            {
+                AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
+            }
+        }
+
         private static void SaveNewIcon(string assetPath, int maxTextureSize)
         {
             IconGeneratorAssetPostprocessor.PendingIconImports[assetPath] = maxTextureSize;

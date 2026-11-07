@@ -147,7 +147,7 @@
     "GenerationSummary": "已保存 {0} 项 · 失败 {1} 项 · 已跳过 {2} 项", // {0}: number saved, {1}: number failed, {2}: number skipped
     "GenerationSucceeded": "已保存",
     "GenerationSkipped": "已跳过",
-    "GenerationCancelled": "已取消 — {0}", // {0}: GenerationSummary text
+    "GenerationCancelled": "已取消 — 已还原 {0} 项", // {0}: number reverted
     "GenerationFailed": "生成失败",
     "GenerationWarnings": "警告",
     "DuplicateCapture": "相同的拍摄内容已作为其他项保存。",

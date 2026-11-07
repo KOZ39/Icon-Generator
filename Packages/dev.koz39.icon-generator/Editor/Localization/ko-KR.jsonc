@@ -147,7 +147,7 @@
     "GenerationSummary": "{0}개 저장 · {1}개 실패 · {2}개 건너뜀", // {0}: 저장 수, {1}: 실패 수, {2}: 건너뛴 수
     "GenerationSucceeded": "저장 완료",
     "GenerationSkipped": "건너뜀",
-    "GenerationCancelled": "생성 취소 — {0}", // {0}: GenerationSummary 문구
+    "GenerationCancelled": "생성 취소 — {0}개 되돌림", // {0}: 되돌린 수
     "GenerationFailed": "생성 실패",
     "GenerationWarnings": "경고",
     "DuplicateCapture": "동일한 촬영 결과가 다른 항목으로 이미 저장되어 있습니다.",
