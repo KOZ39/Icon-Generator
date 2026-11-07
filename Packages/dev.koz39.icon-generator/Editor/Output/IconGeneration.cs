@@ -53,7 +53,6 @@ namespace KOZ39.IconGenerator
         internal readonly IReadOnlyList<IconGenerationFailure> Failures;
         internal readonly IReadOnlyList<string> SavedPaths;
         internal readonly IReadOnlyList<IconGenerationSkip> SkippedTargets;
-        internal readonly int CompletedTargetCount;
         internal readonly IReadOnlyList<CaptureValidationException> Warnings;
         internal readonly IReadOnlyList<(GameObject Target, string Path)> Icons;
 
@@ -62,7 +61,6 @@ namespace KOZ39.IconGenerator
             IReadOnlyList<IconGenerationFailure> failures,
             IReadOnlyList<string> savedPaths,
             IReadOnlyList<IconGenerationSkip> skippedTargets,
-            int completedTargetCount,
             IReadOnlyList<CaptureValidationException> warnings = null,
             IReadOnlyList<(GameObject Target, string Path)> icons = null
         )
@@ -73,7 +71,6 @@ namespace KOZ39.IconGenerator
             Failures = failures;
             SavedPaths = savedPaths;
             SkippedTargets = skippedTargets;
-            CompletedTargetCount = completedTargetCount;
         }
     }
 
@@ -195,13 +192,12 @@ namespace KOZ39.IconGenerator
             var warnings = new List<CaptureValidationException>();
             var warningIdentities = new HashSet<(string Key, string Arguments)>();
 
-            IconGenerationResult Result(bool cancelled, int completedTargetCount) =>
+            IconGenerationResult Result(bool cancelled) =>
                 new(
                     cancelled,
                     failures.OrderBy(item => item.Index).Select(item => item.Failure).ToArray(),
                     savedPaths.OrderBy(item => item.Index).Select(item => item.Path).ToArray(),
                     skippedTargets.OrderBy(item => item.Index).Select(item => item.Skip).ToArray(),
-                    completedTargetCount,
                     warnings,
                     icons
                         .OrderBy(item => item.Index)
@@ -223,7 +219,7 @@ namespace KOZ39.IconGenerator
 
                 if (shouldCancel?.Invoke(target, index, targets.Count) == true)
                 {
-                    return Result(true, index);
+                    return Result(true);
                 }
 
                 Texture2D texture = null;
@@ -359,7 +355,7 @@ namespace KOZ39.IconGenerator
 
                 if (selected == null)
                 {
-                    return Result(true, targets.Count);
+                    return Result(true);
                 }
 
                 var approvedOverwrites = new HashSet<string>(
@@ -414,7 +410,7 @@ namespace KOZ39.IconGenerator
                 throw new CaptureValidationException("NoRenderers");
             }
 
-            return Result(false, targets.Count);
+            return Result(false);
         }
     }
 }
