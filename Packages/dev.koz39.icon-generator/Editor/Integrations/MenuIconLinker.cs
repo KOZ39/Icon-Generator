@@ -302,11 +302,12 @@ namespace KOZ39.IconGenerator
                     relation != MenuIconRelation.Hide
                     && (
                         current == null
-                        || string.Equals(
-                            Path.GetDirectoryName(currentPath),
-                            Path.GetDirectoryName(iconPath),
-                            StringComparison.OrdinalIgnoreCase
-                        )
+                        || !string.IsNullOrEmpty(currentPath)
+                            && string.Equals(
+                                Path.GetDirectoryName(currentPath),
+                                Path.GetDirectoryName(iconPath),
+                                StringComparison.OrdinalIgnoreCase
+                            )
                     ),
             };
         }
