@@ -70,7 +70,7 @@ namespace KOZ39.IconGenerator
             EditorUtility.DisplayCancelableProgressBar(
                 IconGeneratorPackageInfo.DisplayName,
                 $"{TargetDisplayName(target != null ? target.name : null)} ({index + 1}/{count})",
-                (float)(index + 1) / count
+                (float)index / count
             );
 
         internal void GenerateTarget(GameObject target)
