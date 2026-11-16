@@ -194,17 +194,22 @@ namespace KOZ39.IconGenerator
             var icons = new List<(int Index, GameObject Target, string Path)>();
             var warnings = new List<CaptureValidationException>();
             var warningIdentities = new HashSet<(string Key, string Arguments)>();
-            var originals = new Dictionary<string, (byte[] Png, byte[] Meta)>(
-                StringComparer.OrdinalIgnoreCase
-            );
+            var originals =
+                new List<(
+                    int Index,
+                    GameObject Target,
+                    string Path,
+                    (byte[] Png, byte[] Meta) Original
+                )>();
+            var newDirectory = IconFileOutput.FindNewDirectory(folder);
 
-            IconGenerationResult Result(bool cancelled) =>
+            IconGenerationResult Result(bool cancelled, int revertedCount) =>
                 new(
                     cancelled,
                     failures.OrderBy(item => item.Index).Select(item => item.Failure).ToArray(),
                     savedPaths.OrderBy(item => item.Index).Select(item => item.Path).ToArray(),
                     skippedTargets.OrderBy(item => item.Index).Select(item => item.Skip).ToArray(),
-                    cancelled ? originals.Count : 0,
+                    revertedCount,
                     warnings,
                     icons
                         .OrderBy(item => item.Index)
@@ -214,14 +219,38 @@ namespace KOZ39.IconGenerator
 
             IconGenerationResult Cancel()
             {
+                var revertedCount = 0;
+
                 foreach (var original in originals)
                 {
-                    IconFileOutput.Revert(original.Key, original.Value);
+                    try
+                    {
+                        IconFileOutput.Revert(original.Path, original.Original);
+                        revertedCount++;
+                    }
+                    catch (Exception exception)
+                    {
+                        failures.Add(
+                            (original.Index, new IconGenerationFailure(original.Target, exception))
+                        );
+                    }
+                }
+
+                if (newDirectory != null)
+                {
+                    try
+                    {
+                        IconFileOutput.DeleteEmptyDirectory(newDirectory);
+                    }
+                    catch (Exception exception)
+                    {
+                        Debug.LogException(exception);
+                    }
                 }
 
                 savedPaths.Clear();
 
-                return Result(true);
+                return Result(true, revertedCount);
             }
 
             void CollectWarning(CaptureValidationException warning)
@@ -331,8 +360,13 @@ namespace KOZ39.IconGenerator
                         continue;
                     }
 
-                    originals[path] = IconFileOutput.ReadOriginal(path);
-                    IconFileOutput.Save(texture, path);
+                    var original = IconFileOutput.ReadOriginal(path);
+
+                    if (IconFileOutput.Save(texture, path))
+                    {
+                        originals.Add((index, target, path, original));
+                    }
+
                     reservedPaths.Add(path);
                     savedPaths.Add((index, path));
                     icons.Add((index, target, path));
@@ -430,7 +464,7 @@ namespace KOZ39.IconGenerator
                 throw new CaptureValidationException("NoRenderers");
             }
 
-            return Result(false);
+            return Result(false, 0);
         }
     }
 }

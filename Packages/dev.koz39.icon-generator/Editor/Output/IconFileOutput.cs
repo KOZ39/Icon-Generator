@@ -114,10 +114,10 @@ namespace KOZ39.IconGenerator
             }
         }
 
-        internal static void Save(Texture2D texture, string path) =>
+        internal static bool Save(Texture2D texture, string path) =>
             Save(texture.EncodeToPNG(), path, texture.width);
 
-        internal static void Save(byte[] png, string path, int width)
+        internal static bool Save(byte[] png, string path, int width)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             var contentsChanged = !File.Exists(path) || !png.SequenceEqual(File.ReadAllBytes(path));
@@ -150,7 +150,7 @@ namespace KOZ39.IconGenerator
 
             if (!TryGetAssetPath(path, out var assetPath))
             {
-                return;
+                return contentsChanged;
             }
 
             var maxTextureSize = Mathf.NextPowerOfTwo(width);
@@ -159,7 +159,8 @@ namespace KOZ39.IconGenerator
             if (importer == null)
             {
                 SaveNewIcon(assetPath, maxTextureSize);
-                return;
+
+                return true;
             }
 
             if (contentsChanged)
@@ -170,7 +171,7 @@ namespace KOZ39.IconGenerator
 
             if (importer == null)
             {
-                return;
+                return contentsChanged;
             }
 
             var changed = false;
@@ -191,6 +192,8 @@ namespace KOZ39.IconGenerator
             {
                 WriteAndReimport(assetPath);
             }
+
+            return contentsChanged || changed;
         }
 
         internal static (byte[] Png, byte[] Meta) ReadOriginal(string path)
@@ -233,6 +236,44 @@ namespace KOZ39.IconGenerator
             if (inAssets)
             {
                 AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
+            }
+        }
+
+        internal static string FindNewDirectory(string directory)
+        {
+            string missing = null;
+
+            for (
+                var current = directory;
+                current != null && !Directory.Exists(current);
+                current = Path.GetDirectoryName(current)
+            )
+            {
+                missing = current;
+            }
+
+            return missing;
+        }
+
+        internal static void DeleteEmptyDirectory(string directory)
+        {
+            if (
+                !Directory.Exists(directory)
+                || Directory
+                    .EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+                    .Any(file => !file.EndsWith(".meta", StringComparison.OrdinalIgnoreCase))
+            )
+            {
+                return;
+            }
+
+            if (TryGetAssetPath(directory, out var assetPath))
+            {
+                AssetDatabase.DeleteAsset(assetPath);
+            }
+            else
+            {
+                Directory.Delete(directory, true);
             }
         }
 
