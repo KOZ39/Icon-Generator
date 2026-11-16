@@ -399,6 +399,12 @@ namespace KOZ39.IconGenerator
                 }
             }
 
+            // A cancel pressed during the last item has no later per-item check to report it.
+            if (shouldCancel?.Invoke(null, targets.Count, targets.Count) == true)
+            {
+                return Cancel();
+            }
+
             if (pendingOverwrites.Count > 0)
             {
                 var selected = confirmOverwrite?.Invoke(

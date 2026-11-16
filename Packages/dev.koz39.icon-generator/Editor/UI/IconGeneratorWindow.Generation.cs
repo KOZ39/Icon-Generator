@@ -69,7 +69,9 @@ namespace KOZ39.IconGenerator
         private bool ReportProgressAndCheckCancel(GameObject target, int index, int count) =>
             EditorUtility.DisplayCancelableProgressBar(
                 IconGeneratorPackageInfo.DisplayName,
-                $"{TargetDisplayName(target != null ? target.name : null)} ({index + 1}/{count})",
+                index < count
+                    ? $"{TargetDisplayName(target != null ? target.name : null)} ({index + 1}/{count})"
+                    : "",
                 (float)index / count
             );
 
